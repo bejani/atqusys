@@ -76,6 +76,7 @@ $sessions = $stmt->fetchAll();
                                     if ($quiz_exists):
                                 ?>
                                     <a href="view_quiz_qr.php?quiz_id=<?php echo $quiz_exists['id']; ?>" class="btn btn-dark btn-sm" target="_blank">QR کوئیز</a>
+                                    <a href="quiz_report.php?session_id=<?php echo $s['id']; ?>" class="btn btn-outline-dark btn-sm">نمرات</a>
                                 <?php endif; ?>
                             </td>
                         </tr>
