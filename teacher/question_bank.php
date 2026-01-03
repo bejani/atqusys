@@ -45,7 +45,10 @@ $questions = $stmt->fetchAll();
     <div class="container mt-4">
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h3>بانک سوالات شما</h3>
-            <a href="dashboard.php" class="btn btn-secondary">بازگشت به داشبورد</a>
+            <div>
+                <a href="import_questions.php" class="btn btn-info">ایمپورت از ورد (.docx)</a>
+                <a href="dashboard.php" class="btn btn-secondary">بازگشت به داشبورد</a>
+            </div>
         </div>
 
         <div class="row">
