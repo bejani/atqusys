@@ -65,9 +65,18 @@ $sessions = $stmt->fetchAll();
                             <td><?php echo $s['session_date']; ?></td>
                             <td><?php echo $s['is_active'] ? '<span class="badge bg-success">فعال</span>' : '<span class="badge bg-secondary">بسته شده</span>'; ?></td>
                             <td>
-                                <a href="view_qr.php?token=<?php echo $s['qr_code_token']; ?>" class="btn btn-primary btn-sm" target="_blank">نمایش QR Code</a>
+                                <a href="view_qr.php?token=<?php echo $s['qr_code_token']; ?>" class="btn btn-primary btn-sm" target="_blank" title="QR حضور و غیاب">QR حضور</a>
                                 <a href="attendance_report.php?session_id=<?php echo $s['id']; ?>" class="btn btn-info btn-sm">گزارش حضور</a>
                                 <a href="manage_quiz.php?session_id=<?php echo $s['id']; ?>" class="btn btn-warning btn-sm">مدیریت کوئیز</a>
+                                <?php 
+                                    // بررسی وجود کوئیز برای این جلسه جهت نمایش دکمه QR
+                                    $q_stmt = $pdo->prepare("SELECT id FROM quizzes WHERE session_id = ?");
+                                    $q_stmt->execute([$s['id']]);
+                                    $quiz_exists = $q_stmt->fetch();
+                                    if ($quiz_exists):
+                                ?>
+                                    <a href="view_quiz_qr.php?quiz_id=<?php echo $quiz_exists['id']; ?>" class="btn btn-dark btn-sm" target="_blank">QR کوئیز</a>
+                                <?php endif; ?>
                             </td>
                         </tr>
                         <?php endforeach; ?>
