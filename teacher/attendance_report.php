@@ -1,13 +1,18 @@
 <?php
 require_once '../includes/config.php';
-checkRole(['teacher']);
+checkRole(['teacher', 'admin']);
 
 $session_id = $_GET['session_id'] ?? 0;
 $teacher_id = $_SESSION['user_id'];
 
 // دریافت اطلاعات جلسه و درس
-$stmt = $pdo->prepare("SELECT s.*, c.course_name FROM sessions s JOIN courses c ON s.course_id = c.id WHERE s.id = ? AND c.teacher_id = ?");
-$stmt->execute([$session_id, $teacher_id]);
+if ($_SESSION['role'] === 'admin') {
+    $stmt = $pdo->prepare("SELECT s.*, c.course_name FROM sessions s JOIN courses c ON s.course_id = c.id WHERE s.id = ?");
+    $stmt->execute([$session_id]);
+} else {
+    $stmt = $pdo->prepare("SELECT s.*, c.course_name FROM sessions s JOIN courses c ON s.course_id = c.id WHERE s.id = ? AND c.teacher_id = ?");
+    $stmt->execute([$session_id, $teacher_id]);
+}
 $session = $stmt->fetch();
 
 if (!$session) die("جلسه یافت نشد.");
