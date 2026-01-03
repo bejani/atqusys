@@ -129,6 +129,7 @@ $users = $pdo->query("SELECT * FROM users ORDER BY role, full_name")->fetchAll()
                                         ?>
                                     </td>
                                     <td>
+                                        <a href="edit_user.php?id=<?php echo $u['id']; ?>" class="btn btn-outline-primary btn-sm">ویرایش</a>
                                         <?php if($u['id'] != $_SESSION['user_id']): ?>
                                             <a href="?delete_user=<?php echo $u['id']; ?>" class="btn btn-outline-danger btn-sm" onclick="return confirm('آیا مطمئن هستید؟')">حذف</a>
                                         <?php endif; ?>
