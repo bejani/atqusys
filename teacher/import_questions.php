@@ -6,25 +6,31 @@ $teacher_id = $_SESSION['user_id'];
 $message = "";
 
 /**
- * تابع ساده برای استخراج متن از فایل .docx بدون نیاز به کتابخانه‌های سنگین
+ * تابع مدرن برای استخراج متن از فایل .docx با استفاده از ZipArchive (سازگار با PHP 8)
  */
 function read_docx($filename) {
     $striped_content = '';
     $content = '';
+    
     if (!$filename || !file_exists($filename)) return false;
-    $zip = zip_open($filename);
-    if (!$zip || is_numeric($zip)) return false;
-    while ($zip_entry = zip_read($zip)) {
-        if (zip_entry_open($zip, $zip_entry) == FALSE) continue;
-        if (zip_entry_name($zip_entry) != "word/document.xml") continue;
-        $content .= zip_entry_read($zip_entry, zip_entry_filesize($zip_entry));
-        zip_entry_close($zip_entry);
+    
+    $zip = new ZipArchive();
+    if ($zip->open($filename) === TRUE) {
+        // فایل اصلی محتوای ورد در ساختار docx
+        $xml_content = $zip->getFromName("word/document.xml");
+        if ($xml_content) {
+            // جایگزینی تگ‌های پاراگراف و جدول برای حفظ فواصل
+            $xml_content = str_replace('</w:r></w:p></w:tc><w:tc>', " ", $xml_content);
+            $xml_content = str_replace('</w:r></w:p>', "\n", $xml_content);
+            $striped_content = strip_tags($xml_content);
+            $content = $striped_content;
+        }
+        $zip->close();
+    } else {
+        return false;
     }
-    zip_close($zip);
-    $content = str_replace('</w:r></w:p></w:tc><w:tc>', " ", $content);
-    $content = str_replace('</w:r></w:p>', "\n", $content);
-    $striped_content = strip_tags($content);
-    return $striped_content;
+    
+    return $content;
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['word_file'])) {
@@ -40,6 +46,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['word_file'])) {
             $imported_count = 0;
 
             foreach ($lines as $line) {
+                $line = trim($line);
+                if (empty($line)) continue;
+                
                 $parts = explode("|", $line);
                 // فرمت: سوال | گزینه1 | گزینه2 | گزینه3 | گزینه4 | پاسخ(a,b,c,d)
                 if (count($parts) >= 6) {
@@ -60,7 +69,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['word_file'])) {
             }
             $message = "تعداد $imported_count سوال با موفقیت ایمپورت شد.";
         } else {
-            $message = "خطا در خواندن فایل ورد.";
+            $message = "خطا در خواندن فایل ورد. مطمئن شوید فایل سالم است.";
         }
     }
 }
