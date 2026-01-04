@@ -30,7 +30,10 @@ $active_quizzes = $stmt->fetchAll();
     <nav class="navbar navbar-dark bg-primary mb-4">
         <div class="container">
             <span class="navbar-brand">پنل دانشجو: <?php echo $_SESSION['full_name']; ?></span>
-            <a href="../logout.php" class="btn btn-outline-light btn-sm">خروج</a>
+            <div>
+                <a href="my_reports.php" class="btn btn-outline-light btn-sm me-2">گزارشات من</a>
+                <a href="../logout.php" class="btn btn-outline-light btn-sm">خروج</a>
+            </div>
         </div>
     </nav>
 
