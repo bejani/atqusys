@@ -6,7 +6,7 @@ $student_id = $_SESSION['user_id'];
 
 // دریافت سوابق حضور و غیاب
 $stmt = $pdo->prepare("
-    SELECT s.session_date, c.course_name, a.attended_at 
+    SELECT s.session_date, c.course_name, a.scanned_at 
     FROM attendance a 
     JOIN sessions s ON a.session_id = s.id 
     JOIN courses c ON s.course_id = c.id 
@@ -69,7 +69,7 @@ $quiz_records = $stmt->fetchAll();
                                     <tr>
                                         <td><?php echo $record['course_name']; ?></td>
                                         <td><?php echo $record['session_date']; ?></td>
-                                        <td><?php echo date('H:i', strtotime($record['attended_at'])); ?></td>
+                                        <td><?php echo date('H:i', strtotime($record['scanned_at'])); ?></td>
                                     </tr>
                                     <?php endforeach; ?>
                                     <?php if (empty($attendance_records)): ?>
