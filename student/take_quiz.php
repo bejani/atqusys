@@ -12,6 +12,13 @@ $quiz = $stmt->fetch();
 
 if (!$quiz) die("کوئیز فعال یافت نشد.");
 
+// بررسی اینکه آیا دانشجو در این جلسه حضور داشته است؟
+$stmt = $pdo->prepare("SELECT * FROM attendance WHERE session_id = ? AND student_id = ?");
+$stmt->execute([$quiz['session_id'], $student_id]);
+if (!$stmt->fetch()) {
+    die("<div style='font-family:Tahoma; text-align:center; margin-top:50px; color:red;'><h3>خطای دسترسی</h3><p>شما ابتدا باید حضور خود را در این جلسه ثبت کنید تا بتوانید در کوئیز شرکت نمایید.</p><a href='dashboard.php'>بازگشت به داشبورد</a></div>");
+}
+
 // بررسی اینکه آیا دانشجو قبلاً شرکت کرده است؟
 $stmt = $pdo->prepare("SELECT * FROM quiz_results WHERE quiz_id = ? AND student_id = ?");
 $stmt->execute([$quiz_id, $student_id]);
