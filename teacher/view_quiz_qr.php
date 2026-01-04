@@ -19,7 +19,8 @@ if (!$quiz) {
 // آدرس صفحه شرکت در کوئیز برای دانشجو
 $protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http";
 $host = $_SERVER['HTTP_HOST'];
-$quiz_url = "$protocol://$host/attendance_quiz_system/student/take_quiz.php?quiz_id=$quiz_id";
+$current_dir = dirname($_SERVER['REQUEST_URI'], 2);
+$quiz_url = "$protocol://$host$current_dir/student/take_quiz.php?quiz_id=$quiz_id";
 
 // استفاده از API گوگل برای تولید QR Code
 $qr_api_url = "https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=" . urlencode($quiz_url);

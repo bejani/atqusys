@@ -15,9 +15,10 @@ if (!$session) {
 
 // آدرس صفحه ثبت حضور برای دانشجو
 // در محیط واقعی این باید آدرس IP یا دامنه سرور شما باشد
-$protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http";
-$host = $_SERVER['HTTP_HOST'];
-$attendance_url = "$protocol://$host/attendance_quiz_system/student/mark_attendance.php?token=$token";
+$protocol = isset($_SERVER["HTTPS"]) && $_SERVER["HTTPS"] === "on" ? "https" : "http";
+$host = $_SERVER["HTTP_HOST"];
+$current_dir = dirname($_SERVER["REQUEST_URI"], 2);
+$attendance_url = "$protocol://$host$current_dir/student/mark_attendance.php?token=$token";
 
 // استفاده از API گوگل برای تولید QR Code
 $qr_api_url = "https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=" . urlencode($attendance_url);
