@@ -18,13 +18,13 @@ $attendance_records = $stmt->fetchAll();
 
 // دریافت سوابق نمرات کوئیز
 $stmt = $pdo->prepare("
-    SELECT q.title, c.course_name, qr.score, qr.created_at 
+    SELECT q.title, c.course_name, qr.score, qr.submitted_at 
     FROM quiz_results qr 
     JOIN quizzes q ON qr.quiz_id = q.id 
     JOIN sessions s ON q.session_id = s.id 
     JOIN courses c ON s.course_id = c.id 
     WHERE qr.student_id = ? 
-    ORDER BY qr.created_at DESC
+    ORDER BY qr.submitted_at DESC
 ");
 $stmt->execute([$student_id]);
 $quiz_records = $stmt->fetchAll();
