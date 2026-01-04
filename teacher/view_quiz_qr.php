@@ -2,10 +2,10 @@
 require_once '../includes/config.php';
 checkRole(['teacher']);
 
-$quiz_id = $_GET['quiz_id'] ?? 0;
+$quiz_id = isset($_GET['quiz_id']) ? (int)$_GET['quiz_id'] : 0;
 
 // دریافت اطلاعات کوئیز و درس
-$stmt = $pdo->prepare("SELECT q.*, c.course_name, s.session_date FROM quizzes q 
+$stmt = $pdo->prepare("SELECT q.*, s.course_id, c.course_name, s.session_date FROM quizzes q 
                        JOIN sessions s ON q.session_id = s.id 
                        JOIN courses c ON s.course_id = c.id 
                        WHERE q.id = ? AND c.teacher_id = ?");

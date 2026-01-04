@@ -2,15 +2,15 @@
 require_once '../includes/config.php';
 checkRole(['teacher', 'admin']);
 
-$session_id = $_GET['session_id'] ?? 0;
+$session_id = isset($_GET['session_id']) ? (int)$_GET['session_id'] : 0;
 $teacher_id = $_SESSION['user_id'];
 
 // دریافت اطلاعات کوئیز
 if ($_SESSION['role'] === 'admin') {
-    $stmt = $pdo->prepare("SELECT q.*, c.course_name FROM quizzes q JOIN sessions s ON q.session_id = s.id JOIN courses c ON s.course_id = c.id WHERE q.session_id = ?");
+    $stmt = $pdo->prepare("SELECT q.*, s.course_id, c.course_name FROM quizzes q JOIN sessions s ON q.session_id = s.id JOIN courses c ON s.course_id = c.id WHERE q.session_id = ?");
     $stmt->execute([$session_id]);
 } else {
-    $stmt = $pdo->prepare("SELECT q.*, c.course_name FROM quizzes q JOIN sessions s ON q.session_id = s.id JOIN courses c ON s.course_id = c.id WHERE q.session_id = ? AND c.teacher_id = ?");
+    $stmt = $pdo->prepare("SELECT q.*, s.course_id, c.course_name FROM quizzes q JOIN sessions s ON q.session_id = s.id JOIN courses c ON s.course_id = c.id WHERE q.session_id = ? AND c.teacher_id = ?");
     $stmt->execute([$session_id, $teacher_id]);
 }
 $quiz = $stmt->fetch();

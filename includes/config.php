@@ -1,13 +1,14 @@
 <?php
+
 /**
  * تنظیمات پایگاه داده
  * در محیط لاراگون معمولاً نام کاربری root و رمز عبور خالی است.
  */
 
 define('DB_HOST', 'localhost');
-define('DB_NAME', 'attendance_quiz_db');
+define('DB_NAME', 'atqusysdb');
 define('DB_USER', 'root');
-define('DB_PASS', '');
+define('DB_PASS', '4562');
 
 try {
     $pdo = new PDO("mysql:host=" . DB_HOST . ";dbname=" . DB_NAME . ";charset=utf8mb4", DB_USER, DB_PASS);
@@ -26,10 +27,10 @@ if (session_status() === PHP_SESSION_NONE) {
 /**
  * تابع کمکی برای بررسی دسترسی نقش‌ها
  */
-function checkRole($allowedRoles) {
+function checkRole($allowedRoles)
+{
     if (!isset($_SESSION['user_id']) || !in_array($_SESSION['role'], $allowedRoles)) {
         header("Location: ../login.php?error=access_denied");
         exit();
     }
 }
-?>
