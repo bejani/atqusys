@@ -18,26 +18,10 @@ $stmt = $pdo->prepare("SELECT q.*, c.course_name FROM quizzes q
 $stmt->execute([$student_id]);
 $active_quizzes = $stmt->fetchAll();
 ?>
-<!DOCTYPE html>
-<html lang="fa" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <title>پنل دانشجو</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css">
-    <style>body { font-family: Tahoma; background-color: #f4f7f6; }</style>
-</head>
-<body>
-    <nav class="navbar navbar-dark bg-primary mb-4">
-        <div class="container">
-            <span class="navbar-brand">پنل دانشجو: <?php echo $_SESSION['full_name']; ?></span>
-            <div>
-                <a href="my_reports.php" class="btn btn-outline-light btn-sm me-2">گزارشات من</a>
-                <a href="../logout.php" class="btn btn-outline-light btn-sm">خروج</a>
-            </div>
-        </div>
-    </nav>
-
-    <div class="container">
+<?php 
+$page_title = "پنل دانشجو - داشبورد";
+include 'header.php'; 
+?>
         <?php if (isset($_GET['quiz_success'])): ?>
             <div class="alert alert-success">کوئیز با موفقیت ثبت شد. نمره شما: <?php echo $_GET['score']; ?> از ۲۰</div>
         <?php endif; ?>
@@ -78,6 +62,4 @@ $active_quizzes = $stmt->fetchAll();
                 </div>
             </div>
         </div>
-    </div>
-</body>
-</html>
+<?php include 'footer.php'; ?>

@@ -29,26 +29,10 @@ $stmt = $pdo->prepare("
 $stmt->execute([$student_id]);
 $quiz_records = $stmt->fetchAll();
 ?>
-<!DOCTYPE html>
-<html lang="fa" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <title>گزارشات من</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css">
-    <style>body { font-family: Tahoma; background-color: #f8f9fa; }</style>
-</head>
-<body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
-        <div class="container">
-            <a class="navbar-brand" href="dashboard.php">پنل دانشجو</a>
-            <div class="navbar-nav ms-auto">
-                <a class="nav-link active" href="my_reports.php">گزارشات من</a>
-                <a class="nav-link" href="../logout.php">خروج</a>
-            </div>
-        </div>
-    </nav>
-
-    <div class="container">
+<?php 
+$page_title = "گزارشات من - سوابق حضور و نمرات";
+include 'header.php'; 
+?>
         <div class="row">
             <!-- بخش حضور و غیاب -->
             <div class="col-md-6 mb-4">
@@ -117,6 +101,4 @@ $quiz_records = $stmt->fetchAll();
         <div class="text-center mt-3">
             <a href="dashboard.php" class="btn btn-secondary">بازگشت به داشبورد</a>
         </div>
-    </div>
-</body>
-</html>
+<?php include 'footer.php'; ?>
