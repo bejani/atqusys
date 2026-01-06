@@ -15,7 +15,19 @@ if ($role === 'admin') {
 }
 $session = $stmt->fetch();
 
-if (!$session) die("دسترسی غیرمجاز یا جلسه یافت نشد.");
+if (!$session) {
+    // اگر جلسه پیدا نشد، شاید به خاطر این باشد که ادمین است اما کوئری اول به هر دلیلی (مثلاً دیتابیس متفاوت) با خطا مواجه شده
+    // یک بررسی ساده‌تر برای ادمین انجام می‌دهیم
+    if ($role === 'admin') {
+        $stmt = $pdo->prepare("SELECT s.*, 'گزارش ادمین' as course_name FROM sessions s WHERE s.id = ?");
+        $stmt->execute([$session_id]);
+        $session = $stmt->fetch();
+    }
+}
+
+if (!$session) {
+    die("دسترسی غیرمجاز یا جلسه یافت نشد.");
+}
 
 // دریافت داده‌ها
 $stmt = $pdo->prepare("
