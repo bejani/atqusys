@@ -2,123 +2,118 @@
 require_once '../includes/config.php';
 checkRole(['teacher']);
 
+require_once '../src/autoload.php';
+use App\Actions\CourseAction;
+use App\Actions\StudentAction;
+
+$courseAction = new CourseAction();
+$studentAction = new StudentAction();
+
 $course_id = $_GET['id'] ?? 0;
 $teacher_id = $_SESSION['user_id'];
 
 // بررسی مالکیت درس
-$stmt = $pdo->prepare("SELECT * FROM courses WHERE id = ? AND teacher_id = ?");
-$stmt->execute([$course_id, $teacher_id]);
-$course = $stmt->fetch();
-
+$course = $courseAction->getCourseById($course_id, $teacher_id);
 if (!$course) die("درس یافت نشد.");
 
 $message = "";
+$messageType = "success";
 
 // بروزرسانی لیست دانشجویان
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_students'])) {
     $selected_students = $_POST['student_ids'] ?? [];
-    
-    try {
-        $pdo->beginTransaction();
-        
-        // ابتدا تمام دانشجویان فعلی این درس را حذف می‌کنیم
-        $stmt = $pdo->prepare("DELETE FROM course_students WHERE course_id = ?");
-        $stmt->execute([$course_id]);
-        
-        // سپس دانشجویان انتخاب شده جدید را اضافه می‌کنیم
-        if (!empty($selected_students)) {
-            $stmt = $pdo->prepare("INSERT INTO course_students (course_id, student_id) VALUES (?, ?)");
-            foreach ($selected_students as $s_id) {
-                $stmt->execute([$course_id, $s_id]);
-            }
-        }
-        
-        $pdo->commit();
+    if ($studentAction->updateCourseStudents($course_id, $selected_students)) {
         $message = "لیست دانشجویان با موفقیت به‌روزرسانی شد.";
-    } catch (Exception $e) {
-        $pdo->rollBack();
-        $message = "خطا در ذخیره‌سازی: " . $e->getMessage();
+    } else {
+        $message = "خطا در به‌روزرسانی لیست دانشجویان.";
+        $messageType = "danger";
     }
 }
 
-// دریافت لیست تمام دانشجویان سیستم
-$stmt = $pdo->query("SELECT id, full_name, username FROM users WHERE role = 'student' ORDER BY full_name ASC");
-$all_students = $stmt->fetchAll();
+// دریافت داده‌ها
+$all_students = $studentAction->getAllStudents();
+$current_student_ids = $studentAction->getCourseStudentIds($course_id);
 
-// دریافت لیست دانشجویانی که در حال حاضر در این درس هستند
-$stmt = $pdo->prepare("SELECT student_id FROM course_students WHERE course_id = ?");
-$stmt->execute([$course_id]);
-$current_student_ids = $stmt->fetchAll(PDO::FETCH_COLUMN);
+include 'header.php'; 
 ?>
-<!DOCTYPE html>
-<html lang="fa" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <title>مدیریت دانشجویان درس</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css">
-    <style>
-        body { font-family: Tahoma; background-color: #f8f9fa; }
-        .student-list { max-height: 500px; overflow-y: auto; }
-    </style>
-</head>
-<body>
-    <div class="container mt-5">
-        <div class="card shadow">
-            <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
-                <strong>مدیریت دانشجویان درس: <?php echo $course['course_name']; ?></strong>
-                <a href="dashboard.php" class="btn btn-sm btn-light">بازگشت به داشبورد</a>
+
+<div class="row mb-4">
+    <div class="col-12">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="dashboard.php" class="text-decoration-none">داشبورد</a></li>
+                <li class="breadcrumb-item active">مدیریت دانشجویان: <?php echo $course['course_name']; ?></li>
+            </ol>
+        </nav>
+        <div class="d-flex justify-content-between align-items-center">
+            <div>
+                <h2 class="fw-bold text-dark mb-1">مدیریت دانشجویان</h2>
+                <p class="text-muted">دانشجویان مجاز به شرکت در این درس را انتخاب کنید.</p>
             </div>
-            <div class="card-body">
-                <?php if ($message): ?> <div class="alert alert-success"><?php echo $message; ?></div> <?php endif; ?>
-                
-                <form method="POST">
-                    <div class="mb-3 d-flex justify-content-between align-items-center">
-                        <h5>لیست دانشجویان سیستم</h5>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="selectAll">
-                            <label class="form-check-label" for="selectAll">انتخاب همه</label>
-                        </div>
-                    </div>
-                    
-                    <div class="student-list border rounded p-3 bg-white">
-                        <table class="table table-hover">
-                            <thead>
-                                <tr>
-                                    <th width="50">انتخاب</th>
-                                    <th>نام و نام خانوادگی</th>
-                                    <th>نام کاربری (شماره دانشجویی)</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php foreach ($all_students as $student): ?>
-                                <tr>
-                                    <td>
-                                        <input class="form-check-input student-checkbox" type="checkbox" name="student_ids[]" 
-                                               value="<?php echo $student['id']; ?>"
-                                               <?php echo in_array($student['id'], $current_student_ids) ? 'checked' : ''; ?>>
-                                    </td>
-                                    <td><?php echo $student['full_name']; ?></td>
-                                    <td><?php echo $student['username']; ?></td>
-                                </tr>
-                                <?php endforeach; ?>
-                            </tbody>
-                        </table>
-                    </div>
-                    
-                    <div class="mt-4">
-                        <button type="submit" name="save_students" class="btn btn-success px-5">ذخیره تغییرات لیست</button>
-                    </div>
-                </form>
-            </div>
+            <a href="dashboard.php" class="btn btn-light btn-modern border shadow-sm">
+                <i class="bi bi-arrow-right me-1"></i> بازگشت
+            </a>
         </div>
     </div>
+</div>
 
-    <script>
-        // اسکریپت انتخاب همه
-        document.getElementById('selectAll').addEventListener('change', function() {
-            const checkboxes = document.querySelectorAll('.student-checkbox');
-            checkboxes.forEach(cb => cb.checked = this.checked);
-        });
-    </script>
-</body>
-</html>
+<?php if ($message): ?> 
+    <div class="alert alert-<?php echo $messageType; ?> border-0 shadow-sm badge-modern mb-4">
+        <i class="bi bi-<?php echo $messageType == 'success' ? 'check-circle' : 'exclamation-triangle'; ?>-fill me-2"></i> 
+        <?php echo $message; ?>
+    </div> 
+<?php endif; ?>
+
+<div class="modern-card">
+    <form method="POST">
+        <div class="p-4 border-bottom bg-light bg-opacity-50 d-flex justify-content-between align-items-center">
+            <h5 class="fw-bold mb-0">لیست دانشجویان سیستم</h5>
+            <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" id="selectAll">
+                <label class="form-check-label fw-semibold" for="selectAll">انتخاب همه</label>
+            </div>
+        </div>
+        
+        <div class="table-responsive" style="max-height: 600px; overflow-y: auto;">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="bg-light sticky-top">
+                    <tr>
+                        <th class="ps-4 py-3" width="80">انتخاب</th>
+                        <th class="py-3">نام و نام خانوادگی</th>
+                        <th class="pe-4 py-3">نام کاربری (شماره دانشجویی)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($all_students as $student): ?>
+                    <tr>
+                        <td class="ps-4">
+                            <div class="form-check">
+                                <input class="form-check-input student-checkbox" type="checkbox" name="student_ids[]" 
+                                       value="<?php echo $student['id']; ?>"
+                                       <?php echo in_array($student['id'], $current_student_ids) ? 'checked' : ''; ?>>
+                            </div>
+                        </td>
+                        <td class="fw-bold"><?php echo $student['full_name']; ?></td>
+                        <td class="pe-4"><code><?php echo $student['username']; ?></code></td>
+                    </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="p-4 bg-light border-top text-end">
+            <button type="submit" name="save_students" class="btn btn-primary-modern btn-modern px-5 shadow">
+                <i class="bi bi-save me-1"></i> ذخیره تغییرات لیست
+            </button>
+        </div>
+    </form>
+</div>
+
+<script>
+    document.getElementById('selectAll').addEventListener('change', function() {
+        const checkboxes = document.querySelectorAll('.student-checkbox');
+        checkboxes.forEach(cb => cb.checked = this.checked);
+    });
+</script>
+
+<?php include 'footer.php'; ?>
