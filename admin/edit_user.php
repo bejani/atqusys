@@ -36,57 +36,57 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_user'])) {
         $message = "خطا در بروزرسانی: " . $e->getMessage();
     }
 }
+
+include 'header.php';
 ?>
-<!DOCTYPE html>
-<html lang="fa" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <title>ویرایش کاربر</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css">
-    <style>body { font-family: Tahoma; background-color: #f8f9fa; }</style>
-</head>
-<body>
-    <div class="container mt-5">
-        <div class="row justify-content-center">
-            <div class="col-md-6">
-                <div class="card shadow">
-                    <div class="card-header bg-primary text-white">ویرایش اطلاعات کاربر: <?php echo $user['full_name']; ?></div>
-                    <div class="card-body">
-                        <?php if ($message): ?> <div class="alert alert-danger"><?php echo $message; ?></div> <?php endif; ?>
-                        <form method="POST">
-                            <div class="mb-3">
-                                <label class="form-label">نام کاربری</label>
-                                <input type="text" name="username" class="form-control" value="<?php echo $user['username']; ?>" required>
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label">نام و نام خانوادگی</label>
-                                <input type="text" name="full_name" class="form-control" value="<?php echo $user['full_name']; ?>" required>
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label">ایمیل</label>
-                                <input type="email" name="email" class="form-control" value="<?php echo $user['email']; ?>">
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label">نقش</label>
-                                <select name="role" class="form-select">
-                                    <option value="student" <?php echo $user['role'] == 'student' ? 'selected' : ''; ?>>دانشجو</option>
-                                    <option value="teacher" <?php echo $user['role'] == 'teacher' ? 'selected' : ''; ?>>استاد</option>
-                                    <option value="admin" <?php echo $user['role'] == 'admin' ? 'selected' : ''; ?>>ادمین</option>
-                                </select>
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label">رمز عبور جدید (اگر نمی‌خواهید تغییر دهید خالی بگذارید)</label>
-                                <input type="password" name="password" class="form-control">
-                            </div>
-                            <div class="d-flex justify-content-between">
-                                <button type="submit" name="update_user" class="btn btn-success">ذخیره تغییرات</button>
-                                <a href="dashboard.php" class="btn btn-secondary">انصراف</a>
-                            </div>
-                        </form>
+
+<div class="row justify-content-center">
+    <div class="col-lg-6">
+        <div class="modern-card">
+            <div class="p-4 border-bottom bg-light bg-opacity-50">
+                <h5 class="fw-bold mb-0">ویرایش اطلاعات کاربر: <?php echo $user['full_name']; ?></h5>
+            </div>
+            <div class="p-4 p-md-5">
+                <?php if ($message): ?> 
+                    <div class="alert alert-danger badge-modern mb-4"><?php echo $message; ?></div> 
+                <?php endif; ?>
+                
+                <form method="POST">
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold small">نام و نام خانوادگی</label>
+                        <input type="text" name="full_name" class="form-control form-control-modern" value="<?php echo $user['full_name']; ?>" required>
                     </div>
-                </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold small">نام کاربری</label>
+                        <input type="text" name="username" class="form-control form-control-modern" value="<?php echo $user['username']; ?>" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold small">ایمیل</label>
+                        <input type="email" name="email" class="form-control form-control-modern" value="<?php echo $user['email']; ?>">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold small">نقش کاربری</label>
+                        <select name="role" class="form-select form-control-modern">
+                            <option value="student" <?php echo $user['role'] == 'student' ? 'selected' : ''; ?>>دانشجو</option>
+                            <option value="teacher" <?php echo $user['role'] == 'teacher' ? 'selected' : ''; ?>>استاد</option>
+                            <option value="admin" <?php echo $user['role'] == 'admin' ? 'selected' : ''; ?>>ادمین</option>
+                        </select>
+                    </div>
+                    <div class="mb-4">
+                        <label class="form-label fw-semibold small">رمز عبور جدید</label>
+                        <input type="password" name="password" class="form-control form-control-modern" placeholder="اگر نمی‌خواهید تغییر دهید خالی بگذارید">
+                    </div>
+                    
+                    <div class="d-flex gap-2">
+                        <button type="submit" name="update_user" class="btn btn-primary-modern btn-modern flex-grow-1 shadow">
+                            <i class="bi bi-check-lg me-1"></i> ذخیره تغییرات
+                        </button>
+                        <a href="dashboard.php" class="btn btn-light btn-modern border px-4">انصراف</a>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
-</body>
-</html>
+</div>
+
+<?php include '../teacher/footer.php'; ?>
