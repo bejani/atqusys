@@ -23,60 +23,89 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_course'])) {
         $error = "خطا در ثبت درس: " . $e->getMessage();
     }
 }
-?>
-<?php 
-$page_title = "داشبورد استاد - مدیریت دروس";
+
 include 'header.php'; 
 ?>
-        <div class="row">
-            <!-- فرم افزودن درس -->
-            <div class="col-md-4">
-                <div class="card shadow-sm mb-4">
-                    <div class="card-header bg-primary text-white">افزودن درس جدید</div>
-                    <div class="card-body">
-                        <form method="POST">
-                            <div class="mb-3">
-                                <label class="form-label">نام درس</label>
-                                <input type="text" name="course_name" class="form-control" required>
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label">کد درس</label>
-                                <input type="text" name="course_code" class="form-control" required>
-                            </div>
-                            <button type="submit" name="add_course" class="btn btn-success w-100">ثبت درس</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
 
-            <!-- لیست دروس -->
-            <div class="col-md-8">
-                <div class="card shadow-sm">
-                    <div class="card-header bg-secondary text-white">لیست دروس شما</div>
-                    <div class="card-body">
-                        <table class="table table-hover">
-                            <thead>
-                                <tr>
-                                    <th>نام درس</th>
-                                    <th>کد درس</th>
-                                    <th>عملیات</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php foreach ($courses as $course): ?>
-                                <tr>
-                                    <td><?php echo $course['course_name']; ?></td>
-                                    <td><?php echo $course['course_code']; ?></td>
-                                    <td>
-                                        <a href="manage_students.php?id=<?php echo $course['id']; ?>" class="btn btn-info btn-sm">مدیریت دانشجویان</a>
-                                        <a href="sessions.php?id=<?php echo $course['id']; ?>" class="btn btn-warning btn-sm">جلسات</a>
-                                    </td>
-                                </tr>
-                                <?php endforeach; ?>
-                            </tbody>
-                        </table>
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="d-flex justify-content-between align-items-center">
+            <div>
+                <h2 class="fw-bold text-dark mb-1">مدیریت دروس</h2>
+                <p class="text-muted">دروس خود را مدیریت کنید و دانشجویان را فراخوانی نمایید.</p>
+            </div>
+            <button class="btn btn-primary-modern btn-modern shadow-sm" data-bs-toggle="modal" data-bs-target="#addCourseModal">
+                <i class="bi bi-plus-lg me-1"></i> افزودن درس جدید
+            </button>
+        </div>
+    </div>
+</div>
+
+<?php if (isset($_GET['success'])): ?>
+    <div class="alert alert-success border-0 shadow-sm badge-modern mb-4">
+        <i class="bi bi-check-circle-fill me-2"></i> درس جدید با موفقیت ثبت شد.
+    </div>
+<?php endif; ?>
+
+<div class="row g-4">
+    <?php if (empty($courses)): ?>
+        <div class="col-12 text-center py-5">
+            <i class="bi bi-book display-1 text-muted opacity-25"></i>
+            <p class="mt-3 text-muted">هنوز درسی ثبت نکرده‌اید.</p>
+        </div>
+    <?php else: ?>
+        <?php foreach ($courses as $course): ?>
+            <div class="col-md-6 col-lg-4">
+                <div class="modern-card h-100">
+                    <div class="p-4">
+                        <div class="d-flex justify-content-between align-items-start mb-3">
+                            <div class="bg-primary bg-opacity-10 p-3 rounded-4">
+                                <i class="bi bi-journal-bookmark-fill fs-3 text-primary"></i>
+                            </div>
+                            <span class="badge bg-light text-dark border badge-modern"><?php echo $course['course_code']; ?></span>
+                        </div>
+                        <h4 class="fw-bold mb-3"><?php echo $course['course_name']; ?></h4>
+                        <div class="d-grid gap-2">
+                            <a href="manage_students.php?id=<?php echo $course['id']; ?>" class="btn btn-outline-primary btn-modern btn-sm">
+                                <i class="bi bi-people me-1"></i> مدیریت دانشجویان
+                            </a>
+                            <a href="sessions.php?id=<?php echo $course['id']; ?>" class="btn btn-primary-modern btn-modern btn-sm">
+                                <i class="bi bi-calendar-event me-1"></i> مدیریت جلسات
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
+        <?php endforeach; ?>
+    <?php endif; ?>
+</div>
+
+<!-- Modal افزودن درس -->
+<div class="modal fade" id="addCourseModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 rounded-4 shadow">
+            <div class="modal-header border-0 pb-0">
+                <h5 class="fw-bold">افزودن درس جدید</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <form method="POST">
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">نام درس</label>
+                        <input type="text" name="course_name" class="form-control form-control-modern" placeholder="مثال: ریاضی مهندسی" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">کد درس</label>
+                        <input type="text" name="course_code" class="form-control form-control-modern" placeholder="مثال: MATH101" required>
+                    </div>
+                </div>
+                <div class="modal-footer border-0 pt-0">
+                    <button type="button" class="btn btn-light btn-modern" data-bs-dismiss="modal">انصراف</button>
+                    <button type="submit" name="add_course" class="btn btn-primary-modern btn-modern">ثبت درس</button>
+                </div>
+            </form>
         </div>
+    </div>
+</div>
+
 <?php include 'footer.php'; ?>
