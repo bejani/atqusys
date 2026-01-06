@@ -29,16 +29,11 @@ $stmt = $pdo->prepare("SELECT * FROM sessions WHERE course_id = ? ORDER BY creat
 $stmt->execute([$course_id]);
 $sessions = $stmt->fetchAll();
 ?>
-<!DOCTYPE html>
-<html lang="fa" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <title>جلسات درس - <?php echo $course['course_name']; ?></title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css">
-    <style>body { font-family: Tahoma; background-color: #f4f7f6; }</style>
-</head>
-<body>
-    <div class="container mt-5">
+<?php 
+$page_title = "جلسات درس - " . $course['course_name'];
+include 'header.php'; 
+?>
+    <div class="mt-2">
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h3>جلسات درس: <?php echo $course['course_name']; ?></h3>
             <div>
@@ -85,6 +80,4 @@ $sessions = $stmt->fetchAll();
                 </table>
             </div>
         </div>
-    </div>
-</body>
-</html>
+<?php include 'footer.php'; ?>

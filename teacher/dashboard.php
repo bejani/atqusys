@@ -24,26 +24,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_course'])) {
     }
 }
 ?>
-<!DOCTYPE html>
-<html lang="fa" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <title>پنل استاد - مدیریت دروس</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css">
-    <style>body { font-family: Tahoma; background-color: #f4f7f6; }</style>
-</head>
-<body>
-    <nav class="navbar navbar-dark bg-dark mb-4">
-        <div class="container">
-            <span class="navbar-brand">خوش آمدید، <?php echo $_SESSION['full_name']; ?></span>
-            <div>
-                <a href="question_bank.php" class="btn btn-warning btn-sm">مدیریت بانک سوالات</a>
-                <a href="../logout.php" class="btn btn-outline-light btn-sm">خروج</a>
-            </div>
-        </div>
-    </nav>
-
-    <div class="container">
+<?php 
+$page_title = "داشبورد استاد - مدیریت دروس";
+include 'header.php'; 
+?>
         <div class="row">
             <!-- فرم افزودن درس -->
             <div class="col-md-4">
@@ -95,6 +79,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_course'])) {
                 </div>
             </div>
         </div>
-    </div>
-</body>
-</html>
+<?php include 'footer.php'; ?>
