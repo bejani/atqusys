@@ -13,7 +13,7 @@ class SessionAction {
 
     public function getCourseSessions($course_id) {
         $stmt = $this->pdo->prepare("SELECT * FROM sessions WHERE course_id = ? ORDER BY created_at DESC");
-        $stmt->execute([course_id]);
+        $stmt->execute([$course_id]);
         return $stmt->fetchAll();
     }
 
