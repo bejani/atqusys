@@ -3,30 +3,26 @@ require_once 'includes/config.php';
 
 $error = '';
 
+require_once 'src/autoload.php';
+use App\Actions\LoginAction;
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = $_POST['username'] ?? '';
     $password = $_POST['password'] ?? '';
 
     if (!empty($username) && !empty($password)) {
-        $stmt = $pdo->prepare("SELECT * FROM users WHERE username = ?");
-        $stmt->execute([$username]);
-        $user = $stmt->fetch();
+        $action = new LoginAction();
+        $result = $action->handle($username, $password);
 
-        if ($user && password_verify($password, $user['password'])) {
-            $_SESSION['user_id'] = $user['id'];
-            $_SESSION['username'] = $user['username'];
-            $_SESSION['full_name'] = $user['full_name'];
-            $_SESSION['role'] = $user['role'];
-
-            // هدایت بر اساس نقش
-            switch ($user['role']) {
+        if ($result['success']) {
+            switch ($result['role']) {
                 case 'admin': header("Location: admin/dashboard.php"); break;
                 case 'teacher': header("Location: teacher/dashboard.php"); break;
                 case 'student': header("Location: student/dashboard.php"); break;
             }
             exit();
         } else {
-            $error = "نام کاربری یا رمز عبور اشتباه است.";
+            $error = $result['error'];
         }
     } else {
         $error = "لطفاً تمام فیلدها را پر کنید.";
