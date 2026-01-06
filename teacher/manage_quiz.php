@@ -2,118 +2,167 @@
 require_once '../includes/config.php';
 checkRole(['teacher']);
 
+require_once '../src/autoload.php';
+use App\Actions\QuizAction;
+use App\Actions\QuestionAction;
+
+$quizAction = new QuizAction();
+$questionAction = new QuestionAction();
+
 $session_id = $_GET['session_id'] ?? 0;
 $teacher_id = $_SESSION['user_id'];
 
 // دریافت اطلاعات جلسه
-$stmt = $pdo->prepare("SELECT s.*, c.course_name FROM sessions s JOIN courses c ON s.course_id = c.id WHERE s.id = ? AND c.teacher_id = ?");
-$stmt->execute([$session_id, $teacher_id]);
-$session = $stmt->fetch();
-
+$session = $quizAction->getSessionWithCourse($session_id, $teacher_id);
 if (!$session) die("جلسه یافت نشد.");
 
+$message = "";
+
 // ایجاد یا بروزرسانی کوئیز
-if (isset($_POST['save_quiz'])) {
-    $title = $_POST['title'];
-    $duration = $_POST['duration'];
-    $is_active = isset($_POST['is_active']) ? 1 : 0;
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_quiz'])) {
+    $data = [
+        'title' => $_POST['title'],
+        'duration' => $_POST['duration'],
+        'is_active' => isset($_POST['is_active']) ? 1 : 0
+    ];
     $selected_questions = $_POST['questions'] ?? [];
 
-    // ۱. درج یا آپدیت در جدول quizzes
-    $stmt = $pdo->prepare("INSERT INTO quizzes (session_id, title, duration_minutes, is_active) 
-                           VALUES (?, ?, ?, ?) ON DUPLICATE KEY UPDATE title=?, duration_minutes=?, is_active=?");
-    $stmt->execute([$session_id, $title, $duration, $is_active, $title, $duration, $is_active]);
-    
-    $quiz_id = $pdo->lastInsertId() ?: $pdo->query("SELECT id FROM quizzes WHERE session_id = $session_id")->fetchColumn();
-
-    // ۲. مدیریت سوالات کوئیز (ابتدا قبلی‌ها را پاک می‌کنیم و جدیدها را اضافه می‌کنیم)
-    $pdo->prepare("DELETE FROM quiz_questions WHERE quiz_id = ?")->execute([$quiz_id]);
-    foreach ($selected_questions as $q_id) {
-        $pdo->prepare("INSERT INTO quiz_questions (quiz_id, question_id) VALUES (?, ?)")->execute([$quiz_id, $q_id]);
+    if ($quizAction->saveQuiz($session_id, $data, $selected_questions)) {
+        header("Location: manage_quiz.php?session_id=$session_id&success=1");
+        exit();
+    } else {
+        $message = "خطا در ذخیره تنظیمات کوئیز.";
     }
-    header("Location: manage_quiz.php?session_id=$session_id&success=1");
-    exit();
 }
 
-// دریافت اطلاعات کوئیز فعلی (اگر وجود داشته باشد)
-$stmt = $pdo->prepare("SELECT * FROM quizzes WHERE session_id = ?");
-$stmt->execute([$session_id]);
-$quiz = $stmt->fetch();
+// دریافت اطلاعات کوئیز فعلی
+$quiz = $quizAction->getQuizBySession($session_id);
 $quiz_id = $quiz['id'] ?? 0;
+$selected_q_ids = $quiz_id ? $quizAction->getQuizQuestions($quiz_id) : [];
 
-// دریافت سوالات انتخاب شده
-$selected_q_ids = [];
-if ($quiz_id) {
-    $selected_q_ids = $pdo->query("SELECT question_id FROM quiz_questions WHERE quiz_id = $quiz_id")->fetchAll(PDO::FETCH_COLUMN);
-}
+// دریافت تمام سوالات بانک
+$bank_questions = $questionAction->getTeacherQuestions($teacher_id);
 
-// دریافت تمام سوالات بانک برای انتخاب
-$stmt = $pdo->prepare("SELECT * FROM question_bank WHERE teacher_id = ?");
-$stmt->execute([$teacher_id]);
-$bank_questions = $stmt->fetchAll();
+include 'header.php'; 
 ?>
-<!DOCTYPE html>
-<html lang="fa" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <title>مدیریت کوئیز جلسه</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css">
-    <style>body { font-family: Tahoma; background-color: #f4f7f6; }</style>
-</head>
-<body>
-    <div class="container mt-5">
-        <div class="card shadow">
-            <div class="card-header bg-warning text-dark d-flex justify-content-between">
-                <strong>تنظیم کوئیز برای درس: <?php echo $session['course_name']; ?> (جلسه <?php echo $session['session_date']; ?>)</strong>
-                <a href="sessions.php?id=<?php echo $session['course_id']; ?>" class="btn btn-sm btn-outline-dark">بازگشت</a>
-            </div>
-            <div class="card-body">
-                <form method="POST">
-                    <div class="row mb-4">
-                        <div class="col-md-6">
-                            <label class="form-label">عنوان کوئیز</label>
-                            <input type="text" name="title" class="form-control" value="<?php echo $quiz['title'] ?? 'کوئیز کلاسی'; ?>" required>
-                        </div>
-                        <div class="col-md-3">
-                            <label class="form-label">زمان (دقیقه)</label>
-                            <input type="number" name="duration" class="form-control" value="<?php echo $quiz['duration_minutes'] ?? 10; ?>" required>
-                        </div>
-                        <div class="col-md-3 pt-4">
-                            <div class="form-check form-switch mt-2">
-                                <input class="form-check-input" type="checkbox" name="is_active" <?php echo ($quiz['is_active'] ?? 0) ? 'checked' : ''; ?>>
-                                <label class="form-check-label">کوئیز فعال باشد</label>
-                            </div>
-                        </div>
-                    </div>
 
-                    <h5>انتخاب سوالات از بانک سوالات:</h5>
-                    <div class="table-responsive" style="max-height: 400px; overflow-y: auto;">
-                        <table class="table table-bordered table-striped">
-                            <thead class="table-dark">
+<div class="row mb-4">
+    <div class="col-12">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="dashboard.php" class="text-decoration-none">داشبورد</a></li>
+                <li class="breadcrumb-item"><a href="sessions.php?id=<?php echo $session['course_id']; ?>" class="text-decoration-none"><?php echo $session['course_name']; ?></a></li>
+                <li class="breadcrumb-item active">تنظیم کوئیز</li>
+            </ol>
+        </nav>
+        <div class="d-flex justify-content-between align-items-center">
+            <div>
+                <h2 class="fw-bold text-dark mb-1">تنظیم کوئیز جلسه</h2>
+                <p class="text-muted">جلسه مورخ <?php echo $session['session_date']; ?> - درس <?php echo $session['course_name']; ?></p>
+            </div>
+            <a href="sessions.php?id=<?php echo $session['course_id']; ?>" class="btn btn-light btn-modern border shadow-sm">
+                <i class="bi bi-arrow-right me-1"></i> بازگشت به جلسات
+            </a>
+        </div>
+    </div>
+</div>
+
+<?php if (isset($_GET['success'])): ?>
+    <div class="alert alert-success border-0 shadow-sm badge-modern mb-4">
+        <i class="bi bi-check-circle-fill me-2"></i> تنظیمات کوئیز با موفقیت ذخیره شد.
+    </div>
+<?php endif; ?>
+
+<form method="POST">
+    <div class="row g-4">
+        <div class="col-lg-4">
+            <div class="modern-card p-4 sticky-top" style="top: 100px;">
+                <h5 class="fw-bold mb-4 border-bottom pb-2">تنظیمات کلی</h5>
+                <div class="mb-3">
+                    <label class="form-label fw-semibold">عنوان کوئیز</label>
+                    <input type="text" name="title" class="form-control form-control-modern" value="<?php echo $quiz['title'] ?? 'کوئیز کلاسی'; ?>" required>
+                </div>
+                <div class="mb-4">
+                    <label class="form-label fw-semibold">زمان آزمون (دقیقه)</label>
+                    <div class="input-group">
+                        <input type="number" name="duration" class="form-control form-control-modern" value="<?php echo $quiz['duration_minutes'] ?? 10; ?>" required>
+                        <span class="input-group-text bg-white border-start-0 rounded-end-3"><i class="bi bi-clock text-muted"></i></span>
+                    </div>
+                </div>
+                <div class="mb-4 p-3 rounded-4 bg-light border">
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" name="is_active" id="quizActive" <?php echo ($quiz['is_active'] ?? 0) ? 'checked' : ''; ?>>
+                        <label class="form-check-label fw-bold" for="quizActive">وضعیت: فعال برای دانشجو</label>
+                    </div>
+                    <small class="text-muted d-block mt-1">در صورت غیرفعال بودن، دانشجویان امکان مشاهده و شرکت در آزمون را نخواهند داشت.</small>
+                </div>
+                <button type="submit" name="save_quiz" class="btn btn-primary-modern btn-modern w-100 py-3 shadow">
+                    <i class="bi bi-save me-1"></i> ذخیره نهایی کوئیز
+                </button>
+            </div>
+        </div>
+
+        <div class="col-lg-8">
+            <div class="modern-card">
+                <div class="p-4 border-bottom bg-light bg-opacity-50 d-flex justify-content-between align-items-center">
+                    <h5 class="fw-bold mb-0">انتخاب سوالات از بانک</h5>
+                    <span class="badge bg-dark badge-modern" id="selectedCount">0 سوال انتخاب شده</span>
+                </div>
+                <div class="table-responsive" style="max-height: 600px; overflow-y: auto;">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead class="bg-light sticky-top">
+                            <tr>
+                                <th class="ps-4 py-3" width="80">انتخاب</th>
+                                <th class="py-3">متن سوال</th>
+                                <th class="pe-4 py-3">دسته‌بندی</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php if (empty($bank_questions)): ?>
                                 <tr>
-                                    <th>انتخاب</th>
-                                    <th>متن سوال</th>
-                                    <th>دسته‌بندی</th>
+                                    <td colspan="3" class="text-center py-5">
+                                        <p class="text-muted mb-3">بانک سوالات شما خالی است.</p>
+                                        <a href="question_bank.php" class="btn btn-sm btn-outline-primary btn-modern">ایجاد اولین سوال</a>
+                                    </td>
                                 </tr>
-                            </thead>
-                            <tbody>
+                            <?php else: ?>
                                 <?php foreach ($bank_questions as $bq): ?>
                                 <tr>
-                                    <td class="text-center">
-                                        <input type="checkbox" name="questions[]" value="<?php echo $bq['id']; ?>" 
-                                               <?php echo in_array($bq['id'], $selected_q_ids) ? 'checked' : ''; ?>>
+                                    <td class="ps-4">
+                                        <div class="form-check">
+                                            <input class="form-check-input question-checkbox" type="checkbox" name="questions[]" value="<?php echo $bq['id']; ?>" 
+                                                   <?php echo in_array($bq['id'], $selected_q_ids) ? 'checked' : ''; ?>>
+                                        </div>
                                     </td>
-                                    <td><?php echo $bq['question_text']; ?></td>
-                                    <td><?php echo $bq['category']; ?></td>
+                                    <td>
+                                        <div class="fw-semibold"><?php echo $bq['question_text']; ?></div>
+                                        <small class="text-muted">گزینه صحیح: <?php echo strtoupper($bq['correct_option']); ?></small>
+                                    </td>
+                                    <td class="pe-4">
+                                        <span class="badge bg-light text-dark border badge-modern"><?php echo $bq['category'] ?: 'عمومی'; ?></span>
+                                    </td>
                                 </tr>
                                 <?php endforeach; ?>
-                            </tbody>
-                        </table>
-                    </div>
-                    <button type="submit" name="save_quiz" class="btn btn-primary mt-3 w-100">ذخیره تنظیمات کوئیز</button>
-                </form>
+                            <?php endif; ?>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
-</body>
-</html>
+</form>
+
+<script>
+    function updateCount() {
+        const count = document.querySelectorAll('.question-checkbox:checked').length;
+        document.getElementById('selectedCount').innerText = count + ' سوال انتخاب شده';
+    }
+    
+    document.querySelectorAll('.question-checkbox').forEach(cb => {
+        cb.addEventListener('change', updateCount);
+    });
+    
+    updateCount();
+</script>
+
+<?php include 'footer.php'; ?>
