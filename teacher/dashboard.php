@@ -43,6 +43,25 @@ include 'header.php';
     </div>
 </div>
 
+<?php if (isset($_GET['msg'])): ?>
+    <div class="alert alert-warning border-0 shadow-sm badge-modern mb-4 py-3 animate__animated animate__fadeInDown">
+        <div class="d-flex align-items-center">
+            <div class="bg-warning bg-opacity-25 p-2 rounded-circle me-3">
+                <i class="bi bi-info-circle-fill text-warning fs-4"></i>
+            </div>
+            <div>
+                <h6 class="fw-bold mb-0">لطفاً ابتدا درس مورد نظر را انتخاب کنید</h6>
+                <p class="small mb-0 opacity-75">
+                    <?php 
+                        if($_GET['msg'] == 'select_course_attendance') echo "برای مدیریت جلسات و حضور غیاب، دکمه بنفش رنگ روی کارت درس را کلیک کنید.";
+                        else if($_GET['msg'] == 'select_course_quiz') echo "برای مدیریت کوئیزها، ابتدا وارد بخش مدیریت جلسات درس مربوطه شوید.";
+                    ?>
+                </p>
+            </div>
+        </div>
+    </div>
+<?php endif; ?>
+
 <?php if (isset($_GET['success'])): ?>
     <div class="alert alert-success border-0 shadow-sm badge-modern mb-4">
         <i class="bi bi-check-circle-fill me-2"></i> درس جدید با موفقیت ثبت شد.
@@ -71,7 +90,7 @@ include 'header.php';
                             <a href="manage_students.php?id=<?php echo $course['id']; ?>" class="btn btn-outline-primary btn-modern btn-sm">
                                 <i class="bi bi-people me-1"></i> مدیریت دانشجویان
                             </a>
-                            <a href="sessions.php?id=<?php echo $course['id']; ?>" class="btn btn-primary-modern btn-modern btn-sm">
+                            <a href="sessions.php?id=<?php echo $course['id']; ?>" class="btn <?php echo (isset($_GET['msg'])) ? 'btn-primary-modern pulse-animation' : 'btn-primary-modern'; ?> btn-modern btn-sm">
                                 <i class="bi bi-calendar-event me-1"></i> مدیریت جلسات
                             </a>
                         </div>
@@ -81,6 +100,17 @@ include 'header.php';
         <?php endforeach; ?>
     <?php endif; ?>
 </div>
+
+<style>
+    @keyframes pulse {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.05); box-shadow: 0 0 15px rgba(102, 126, 234, 0.5); }
+        100% { transform: scale(1); }
+    }
+    .pulse-animation {
+        animation: pulse 2s infinite;
+    }
+</style>
 
 <!-- Modal افزودن درس -->
 <div class="modal fade" id="addCourseModal" tabindex="-1">

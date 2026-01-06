@@ -52,7 +52,7 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'teacher') {
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link nav-link-modern <?php echo (basename($_SERVER['PHP_SELF']) == 'sessions.php' || basename($_SERVER['PHP_SELF']) == 'attendance_report.php') ? 'active' : ''; ?>" href="dashboard.php">
+                        <a class="nav-link nav-link-modern" href="dashboard.php?msg=select_course_attendance">
                             <i class="bi bi-calendar-event me-1"></i> جلسات و حضور غیاب
                         </a>
                     </li>
@@ -62,7 +62,7 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'teacher') {
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link nav-link-modern <?php echo (basename($_SERVER['PHP_SELF']) == 'manage_quiz.php' || basename($_SERVER['PHP_SELF']) == 'quiz_report.php') ? 'active' : ''; ?>" href="dashboard.php">
+                        <a class="nav-link nav-link-modern" href="dashboard.php?msg=select_course_quiz">
                             <i class="bi bi-patch-check me-1"></i> مدیریت کوئیز
                         </a>
                     </li>
