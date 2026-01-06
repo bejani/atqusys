@@ -15,6 +15,7 @@ $message = "";
 
 // بروزرسانی اطلاعات
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_user'])) {
+    verifyCsrfToken($_POST['csrf_token'] ?? '');
     $full_name = $_POST['full_name'];
     $email = $_POST['email'];
     $role = $_POST['role'];
@@ -52,6 +53,7 @@ include 'header.php';
                 <?php endif; ?>
                 
                 <form method="POST">
+                    <?php csrfField(); ?>
                     <div class="mb-3">
                         <label class="form-label fw-semibold small">نام و نام خانوادگی</label>
                         <input type="text" name="full_name" class="form-control form-control-modern" value="<?php echo $user['full_name']; ?>" required>

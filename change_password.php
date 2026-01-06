@@ -13,6 +13,7 @@ $error = '';
 $success = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    verifyCsrfToken($_POST['csrf_token'] ?? '');
     $current_password = $_POST['current_password'];
     $new_password = $_POST['new_password'];
     $confirm_password = $_POST['confirm_password'];
@@ -76,6 +77,7 @@ $back_link = ($role === 'admin') ? 'admin/dashboard.php' : (($role === 'teacher'
                     <?php endif; ?>
 
                     <form method="POST">
+                        <?php csrfField(); ?>
                         <div class="mb-3">
                             <label class="form-label fw-semibold small">رمز عبور فعلی</label>
                             <div class="input-group">

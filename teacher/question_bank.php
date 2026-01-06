@@ -10,6 +10,7 @@ $teacher_id = $_SESSION['user_id'];
 
 // افزودن سوال جدید
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_question'])) {
+    verifyCsrfToken($_POST['csrf_token'] ?? '');
     $data = [
         'text' => $_POST['question_text'],
         'a' => $_POST['option_a'],
@@ -127,6 +128,7 @@ include 'header.php';
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <form method="POST">
+                <?php csrfField(); ?>
                 <div class="modal-body">
                     <div class="mb-3">
                         <label class="form-label fw-semibold">متن سوال</label>

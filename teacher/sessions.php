@@ -18,6 +18,7 @@ if (!$course) {
 
 // ایجاد جلسه جدید
 if (isset($_POST['create_session'])) {
+    verifyCsrfToken($_POST['csrf_token'] ?? '');
     if ($sessionAction->createSession($course_id)) {
         header("Location: sessions.php?id=$course_id");
         exit();
@@ -44,6 +45,7 @@ include 'header.php';
                 <p class="text-muted">مدیریت حضور و غیاب و کوئیزهای هر جلسه.</p>
             </div>
             <form method="POST">
+                <?php csrfField(); ?>
                 <button type="submit" name="create_session" class="btn btn-primary-modern btn-modern shadow-sm">
                     <i class="bi bi-plus-circle me-1"></i> ایجاد جلسه امروز
                 </button>

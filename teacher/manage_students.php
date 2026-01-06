@@ -21,6 +21,7 @@ $messageType = "success";
 
 // بروزرسانی لیست دانشجویان
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_students'])) {
+    verifyCsrfToken($_POST['csrf_token'] ?? '');
     $selected_students = $_POST['student_ids'] ?? [];
     if ($studentAction->updateCourseStudents($course_id, $selected_students)) {
         $message = "لیست دانشجویان با موفقیت به‌روزرسانی شد.";
@@ -66,6 +67,7 @@ include 'header.php';
 
 <div class="modern-card">
     <form method="POST">
+        <?php csrfField(); ?>
         <div class="p-4 border-bottom bg-light bg-opacity-50 d-flex justify-content-between align-items-center">
             <h5 class="fw-bold mb-0">لیست دانشجویان سیستم</h5>
             <div class="form-check form-switch">

@@ -12,6 +12,7 @@ $teacher_id = $_SESSION['user_id'];
 
 // افزودن درس جدید
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_course'])) {
+    verifyCsrfToken($_POST['csrf_token'] ?? '');
     $name = $_POST['course_name'];
     $code = $_POST['course_code'];
     
@@ -121,6 +122,7 @@ include 'header.php';
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <form method="POST">
+                <?php csrfField(); ?>
                 <div class="modal-body">
                     <div class="mb-3">
                         <label class="form-label fw-semibold">نام درس</label>

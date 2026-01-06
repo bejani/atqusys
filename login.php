@@ -6,6 +6,7 @@ use App\Actions\LoginAction;
 $error = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    verifyCsrfToken($_POST['csrf_token'] ?? '');
     $username = $_POST['username'] ?? '';
     $password = $_POST['password'] ?? '';
 
@@ -58,6 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <?php endif; ?>
 
                     <form method="POST">
+                        <?php csrfField(); ?>
                         <div class="mb-3">
                             <label class="form-label fw-semibold">نام کاربری</label>
                             <div class="input-group">

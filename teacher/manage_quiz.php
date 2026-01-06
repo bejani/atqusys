@@ -20,6 +20,7 @@ $message = "";
 
 // ایجاد یا بروزرسانی کوئیز
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_quiz'])) {
+    verifyCsrfToken($_POST['csrf_token'] ?? '');
     $data = [
         'title' => $_POST['title'],
         'duration' => $_POST['duration'],
@@ -74,6 +75,7 @@ include 'header.php';
 <?php endif; ?>
 
 <form method="POST">
+    <?php csrfField(); ?>
     <div class="row g-4">
         <div class="col-lg-4">
             <div class="modern-card p-4 sticky-top" style="top: 100px;">

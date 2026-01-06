@@ -34,3 +34,30 @@ function checkRole($allowedRoles)
         exit();
     }
 }
+
+/**
+ * تولید توکن CSRF
+ */
+function generateCsrfToken() {
+    if (empty($_SESSION['csrf_token'])) {
+        $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+    }
+    return $_SESSION['csrf_token'];
+}
+
+/**
+ * تایید توکن CSRF
+ */
+function verifyCsrfToken($token) {
+    if (!isset($_SESSION['csrf_token']) || $token !== $_SESSION['csrf_token']) {
+        die("خطای امنیتی: توکن CSRF نامعتبر است.");
+    }
+    return true;
+}
+
+/**
+ * چاپ فیلد مخفی CSRF برای فرم‌ها
+ */
+function csrfField() {
+    echo '<input type="hidden" name="csrf_token" value="' . generateCsrfToken() . '">';
+}
