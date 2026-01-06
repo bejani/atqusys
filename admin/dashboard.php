@@ -38,114 +38,148 @@ if (isset($_GET['delete_user'])) {
 
 // لیست کاربران
 $users = $pdo->query("SELECT * FROM users ORDER BY role, full_name")->fetchAll();
+
+include 'header.php';
 ?>
-<!DOCTYPE html>
-<html lang="fa" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <title>پنل مدیریت سیستم</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css">
-    <style>body { font-family: Tahoma; background-color: #f0f2f5; }</style>
-</head>
-<body>
-    <nav class="navbar navbar-dark bg-dark mb-4">
-        <div class="container">
-            <span class="navbar-brand">پنل مدیریت سیستم (ادمین)</span>
-            <div>
-                <a href="reports.php" class="btn btn-info btn-sm">گزارشات جامع</a>
-                <a href="../change_password.php" class="btn btn-outline-warning btn-sm me-2">تغییر رمز</a>
-                <a href="../logout.php" class="btn btn-outline-light btn-sm">خروج</a>
-            </div>
+
+<div class="row mb-4">
+    <div class="col-12">
+        <h2 class="fw-bold text-dark mb-1">مدیریت کاربران</h2>
+        <p class="text-muted">کنترل دسترسی‌ها و مدیریت تمامی کاربران سامانه.</p>
+    </div>
+</div>
+
+<!-- کارت‌های آمار -->
+<div class="row g-4 mb-5">
+    <div class="col-md-3">
+        <div class="modern-card p-4 text-center border-start border-primary border-5">
+            <div class="text-primary mb-2"><i class="bi bi-people fs-1"></i></div>
+            <h6 class="text-muted fw-bold">کل کاربران</h6>
+            <h3 class="fw-bold mb-0"><?php echo $total_users; ?></h3>
         </div>
-    </nav>
-
-    <div class="container">
-        <!-- کارت‌های آمار -->
-        <div class="row mb-4 text-center">
-            <div class="col-md-3"><div class="card bg-primary text-white p-3"><h5>کل کاربران</h5><h3><?php echo $total_users; ?></h3></div></div>
-            <div class="col-md-3"><div class="card bg-success text-white p-3"><h5>اساتید</h5><h3><?php echo $total_teachers; ?></h3></div></div>
-            <div class="col-md-3"><div class="card bg-info text-white p-3"><h5>دانشجویان</h5><h3><?php echo $total_students; ?></h3></div></div>
-            <div class="col-md-3"><div class="card bg-secondary text-white p-3"><h5>کل دروس</h5><h3><?php echo $total_courses; ?></h3></div></div>
+    </div>
+    <div class="col-md-3">
+        <div class="modern-card p-4 text-center border-start border-success border-5">
+            <div class="text-success mb-2"><i class="bi bi-person-workspace fs-1"></i></div>
+            <h6 class="text-muted fw-bold">اساتید</h6>
+            <h3 class="fw-bold mb-0"><?php echo $total_teachers; ?></h3>
         </div>
+    </div>
+    <div class="col-md-3">
+        <div class="modern-card p-4 text-center border-start border-info border-5">
+            <div class="text-info mb-2"><i class="bi bi-mortarboard fs-1"></i></div>
+            <h6 class="text-muted fw-bold">دانشجویان</h6>
+            <h3 class="fw-bold mb-0"><?php echo $total_students; ?></h3>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="modern-card p-4 text-center border-start border-warning border-5">
+            <div class="text-warning mb-2"><i class="bi bi-book fs-1"></i></div>
+            <h6 class="text-muted fw-bold">کل دروس</h6>
+            <h3 class="fw-bold mb-0"><?php echo $total_courses; ?></h3>
+        </div>
+    </div>
+</div>
 
-        <div class="row">
-            <!-- فرم افزودن کاربر -->
-            <div class="col-md-4">
-                <div class="card shadow-sm mb-4">
-                    <div class="card-header bg-dark text-white">افزودن کاربر جدید</div>
-                    <div class="card-body">
-                        <?php if (isset($error)): ?> <div class="alert alert-danger small"><?php echo $error; ?></div> <?php endif; ?>
-                        <form method="POST">
-                            <div class="mb-2">
-                                <label class="form-label small">نام کاربری</label>
-                                <input type="text" name="username" class="form-control form-control-sm" required>
-                            </div>
-                            <div class="mb-2">
-                                <label class="form-label small">رمز عبور</label>
-                                <input type="password" name="password" class="form-control form-control-sm" required>
-                            </div>
-                            <div class="mb-2">
-                                <label class="form-label small">نام و نام خانوادگی</label>
-                                <input type="text" name="full_name" class="form-control form-control-sm" required>
-                            </div>
-                            <div class="mb-2">
-                                <label class="form-label small">ایمیل</label>
-                                <input type="email" name="email" class="form-control form-control-sm">
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label small">نقش کاربری</label>
-                                <select name="role" class="form-select form-select-sm" required>
-                                    <option value="student">دانشجو</option>
-                                    <option value="teacher">استاد</option>
-                                    <option value="admin">ادمین</option>
-                                </select>
-                            </div>
-                            <button type="submit" name="add_user" class="btn btn-primary btn-sm w-100">ثبت کاربر</button>
-                        </form>
-                    </div>
-                </div>
+<div class="row g-4">
+    <!-- فرم افزودن کاربر -->
+    <div class="col-lg-4">
+        <div class="modern-card">
+            <div class="p-4 border-bottom bg-light bg-opacity-50">
+                <h5 class="fw-bold mb-0">افزودن کاربر جدید</h5>
             </div>
-
-            <!-- لیست کاربران -->
-            <div class="col-md-8">
-                <div class="card shadow-sm">
-                    <div class="card-header bg-white">لیست کاربران سیستم</div>
-                    <div class="card-body p-0">
-                        <table class="table table-sm table-hover mb-0">
-                            <thead class="table-light">
-                                <tr>
-                                    <th>نام و نام خانوادگی</th>
-                                    <th>نام کاربری</th>
-                                    <th>نقش</th>
-                                    <th>عملیات</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php foreach ($users as $u): ?>
-                                <tr>
-                                    <td><?php echo $u['full_name']; ?></td>
-                                    <td><?php echo $u['username']; ?></td>
-                                    <td>
-                                        <?php 
-                                            if($u['role'] == 'admin') echo '<span class="badge bg-danger">ادمین</span>';
-                                            elseif($u['role'] == 'teacher') echo '<span class="badge bg-success">استاد</span>';
-                                            else echo '<span class="badge bg-info">دانشجو</span>';
-                                        ?>
-                                    </td>
-                                    <td>
-                                        <a href="edit_user.php?id=<?php echo $u['id']; ?>" class="btn btn-outline-primary btn-sm">ویرایش</a>
-                                        <?php if($u['id'] != $_SESSION['user_id']): ?>
-                                            <a href="?delete_user=<?php echo $u['id']; ?>" class="btn btn-outline-danger btn-sm" onclick="return confirm('آیا مطمئن هستید؟')">حذف</a>
-                                        <?php endif; ?>
-                                    </td>
-                                </tr>
-                                <?php endforeach; ?>
-                            </tbody>
-                        </table>
+            <div class="p-4">
+                <?php if (isset($error)): ?> 
+                    <div class="alert alert-danger badge-modern small mb-3"><?php echo $error; ?></div> 
+                <?php endif; ?>
+                <?php if (isset($_GET['success'])): ?> 
+                    <div class="alert alert-success badge-modern small mb-3">کاربر با موفقیت ثبت شد.</div> 
+                <?php endif; ?>
+                
+                <form method="POST">
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold small">نام و نام خانوادگی</label>
+                        <input type="text" name="full_name" class="form-control form-control-modern" required>
                     </div>
-                </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold small">نام کاربری</label>
+                        <input type="text" name="username" class="form-control form-control-modern" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold small">رمز عبور</label>
+                        <input type="password" name="password" class="form-control form-control-modern" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold small">ایمیل</label>
+                        <input type="email" name="email" class="form-control form-control-modern">
+                    </div>
+                    <div class="mb-4">
+                        <label class="form-label fw-semibold small">نقش کاربری</label>
+                        <select name="role" class="form-select form-control-modern" required>
+                            <option value="student">دانشجو</option>
+                            <option value="teacher">استاد</option>
+                            <option value="admin">ادمین</option>
+                        </select>
+                    </div>
+                    <button type="submit" name="add_user" class="btn btn-primary-modern btn-modern w-100 shadow-sm">
+                        <i class="bi bi-person-plus me-1"></i> ثبت کاربر جدید
+                    </button>
+                </form>
             </div>
         </div>
     </div>
-</body>
-</html>
+
+    <!-- لیست کاربران -->
+    <div class="col-lg-8">
+        <div class="modern-card">
+            <div class="p-4 border-bottom bg-light bg-opacity-50 d-flex justify-content-between align-items-center">
+                <h5 class="fw-bold mb-0">لیست کاربران سیستم</h5>
+                <span class="badge bg-primary badge-modern"><?php echo count($users); ?> نفر</span>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="bg-light">
+                        <tr>
+                            <th class="ps-4 py-3">نام و نام خانوادگی</th>
+                            <th class="py-3">نام کاربری</th>
+                            <th class="py-3">نقش</th>
+                            <th class="pe-4 py-3 text-center">عملیات</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($users as $u): ?>
+                        <tr>
+                            <td class="ps-4">
+                                <div class="fw-bold"><?php echo $u['full_name']; ?></div>
+                                <small class="text-muted"><?php echo $u['email'] ?: 'بدون ایمیل'; ?></small>
+                            </td>
+                            <td><code><?php echo $u['username']; ?></code></td>
+                            <td>
+                                <?php 
+                                    if($u['role'] == 'admin') echo '<span class="badge bg-danger-subtle text-danger border border-danger-subtle badge-modern">ادمین</span>';
+                                    elseif($u['role'] == 'teacher') echo '<span class="badge bg-success-subtle text-success border border-success-subtle badge-modern">استاد</span>';
+                                    else echo '<span class="badge bg-info-subtle text-info border border-info-subtle badge-modern">دانشجو</span>';
+                                ?>
+                            </td>
+                            <td class="pe-4 text-center">
+                                <div class="btn-group btn-group-sm">
+                                    <a href="edit_user.php?id=<?php echo $u['id']; ?>" class="btn btn-outline-primary" title="ویرایش">
+                                        <i class="bi bi-pencil"></i>
+                                    </a>
+                                    <?php if($u['id'] != $_SESSION['user_id']): ?>
+                                        <a href="?delete_user=<?php echo $u['id']; ?>" class="btn btn-outline-danger" onclick="return confirm('آیا از حذف این کاربر مطمئن هستید؟')" title="حذف">
+                                            <i class="bi bi-trash"></i>
+                                        </a>
+                                    <?php endif; ?>
+                                </div>
+                            </td>
+                        </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<?php include '../teacher/footer.php'; ?>
