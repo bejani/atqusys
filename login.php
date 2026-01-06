@@ -1,10 +1,9 @@
 <?php
 require_once 'includes/config.php';
-
-$error = '';
-
 require_once 'src/autoload.php';
 use App\Actions\LoginAction;
+
+$error = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = $_POST['username'] ?? '';
@@ -33,34 +32,55 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <html lang="fa" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <title>ورود به سیستم حضور و غیاب</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ورود به سامانه هوشمند حضور و غیاب</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css">
-    <style>
-        body { background-color: #f8f9fa; font-family: Tahoma, Arial; }
-        .login-container { max-width: 400px; margin: 100px auto; }
-    </style>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="assets/css/style.css">
 </head>
-<body>
+<body class="login-page">
     <div class="container">
-        <div class="card login-container shadow">
-            <div class="card-header bg-primary text-white text-center">
-                <h4>ورود به سیستم</h4>
-            </div>
-            <div class="card-body">
-                <?php if ($error): ?>
-                    <div class="alert alert-danger"><?php echo $error; ?></div>
-                <?php endif; ?>
-                <form method="POST">
-                    <div class="mb-3">
-                        <label class="form-label">نام کاربری</label>
-                        <input type="text" name="username" class="form-control" required>
+        <div class="row justify-content-center">
+            <div class="col-md-5 col-lg-4">
+                <div class="modern-card p-4 p-sm-5">
+                    <div class="text-center mb-4">
+                        <div class="mb-3">
+                            <i class="bi bi-mortarboard-fill display-1 text-primary" style="background: var(--primary-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent;"></i>
+                        </div>
+                        <h3 class="fw-bold">خوش آمدید</h3>
+                        <p class="text-muted">وارد حساب کاربری خود شوید</p>
                     </div>
-                    <div class="mb-3">
-                        <label class="form-label">رمز عبور</label>
-                        <input type="password" name="password" class="form-control" required>
+
+                    <?php if ($error): ?>
+                        <div class="alert alert-danger border-0 shadow-sm mb-4 badge-modern text-center">
+                            <i class="bi bi-exclamation-triangle-fill me-2"></i> <?php echo $error; ?>
+                        </div>
+                    <?php endif; ?>
+
+                    <form method="POST">
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">نام کاربری</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-white border-end-0 rounded-start-3"><i class="bi bi-person text-muted"></i></span>
+                                <input type="text" name="username" class="form-control form-control-modern border-start-0 rounded-end-3" placeholder="نام کاربری خود را وارد کنید" required>
+                            </div>
+                        </div>
+                        <div class="mb-4">
+                            <label class="form-label fw-semibold">رمز عبور</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-white border-end-0 rounded-start-3"><i class="bi bi-lock text-muted"></i></span>
+                                <input type="password" name="password" class="form-control form-control-modern border-start-0 rounded-end-3" placeholder="رمز عبور خود را وارد کنید" required>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary-modern btn-modern w-100 py-3 shadow">
+                            ورود به سامانه <i class="bi bi-arrow-left-short ms-2"></i>
+                        </button>
+                    </form>
+
+                    <div class="text-center mt-4">
+                        <small class="text-muted">سامانه هوشمند حضور و غیاب و کوئیز</small>
                     </div>
-                    <button type="submit" class="btn btn-primary w-100">ورود</button>
-                </form>
+                </div>
             </div>
         </div>
     </div>
