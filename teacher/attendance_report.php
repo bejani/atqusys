@@ -1,5 +1,6 @@
 <?php
 require_once '../includes/config.php';
+// اجازه دسترسی به استاد و ادمین
 checkRole(['teacher', 'admin']);
 
 require_once '../src/autoload.php';
@@ -14,7 +15,6 @@ $teacher_id = $_SESSION['user_id'];
 
 // دریافت اطلاعات جلسه و درس
 $session = $quizAction->getSessionWithCourse($session_id, $teacher_id);
-if (!$session && $_SESSION['role'] !== 'admin') die("جلسه یافت نشد.");
 
 // اگر ادمین باشد و جلسه از طریق متد قبلی یافت نشد (چون متد قبلی فیلتر استاد دارد)
 if (!$session && $_SESSION['role'] === 'admin') {
@@ -24,7 +24,9 @@ if (!$session && $_SESSION['role'] === 'admin') {
     $session = $stmt->fetch();
 }
 
-// لیست حضور و غیاب (استفاده از کوئری مستقیم برای گزارش تفصیلی)
+if (!$session) die("جلسه یافت نشد.");
+
+// لیست حضور و غیاب
 $pdo = App\Domain\Database::getInstance();
 $stmt = $pdo->prepare("
     SELECT u.full_name, u.username, a.scanned_at, a.status 
@@ -37,15 +39,19 @@ $stmt = $pdo->prepare("
 $stmt->execute([$session_id, $session['course_id']]);
 $attendance_list = $stmt->fetchAll();
 
-include 'header.php'; 
+// اگر ادمین است، هدر ادمین را لود کن، در غیر این صورت هدر استاد
+if ($_SESSION['role'] === 'admin') {
+    include '../admin/header.php';
+} else {
+    include 'header.php';
+}
 ?>
 
 <div class="row mb-4">
     <div class="col-12">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="dashboard.php" class="text-decoration-none">داشبورد</a></li>
-                <li class="breadcrumb-item"><a href="sessions.php?id=<?php echo $session['course_id']; ?>" class="text-decoration-none"><?php echo $session['course_name']; ?></a></li>
+                <li class="breadcrumb-item"><a href="<?php echo $_SESSION['role'] === 'admin' ? '../admin/dashboard.php' : 'dashboard.php'; ?>" class="text-decoration-none">داشبورد</a></li>
                 <li class="breadcrumb-item active">گزارش حضور و غیاب</li>
             </ol>
         </nav>
@@ -58,7 +64,7 @@ include 'header.php';
                 <a href="export_attendance.php?session_id=<?php echo $session_id; ?>" class="btn btn-success btn-modern shadow-sm">
                     <i class="bi bi-file-earmark-excel me-1"></i> خروجی اکسل
                 </a>
-                <a href="sessions.php?id=<?php echo $session['course_id']; ?>" class="btn btn-light btn-modern border shadow-sm">
+                <a href="<?php echo $_SESSION['role'] === 'admin' ? '../admin/reports.php?course_id='.$session['course_id'] : 'sessions.php?id='.$session['course_id']; ?>" class="btn btn-light btn-modern border shadow-sm">
                     <i class="bi bi-arrow-right me-1"></i> بازگشت
                 </a>
             </div>

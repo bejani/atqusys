@@ -1,5 +1,6 @@
 <?php
 require_once '../includes/config.php';
+// اجازه دسترسی به استاد و ادمین
 checkRole(['teacher', 'admin']);
 
 require_once '../src/autoload.php';
@@ -51,15 +52,19 @@ if (isset($_GET['export'])) {
     exit();
 }
 
-include 'header.php'; 
+// اگر ادمین است، هدر ادمین را لود کن، در غیر این صورت هدر استاد
+if ($_SESSION['role'] === 'admin') {
+    include '../admin/header.php';
+} else {
+    include 'header.php';
+}
 ?>
 
 <div class="row mb-4">
     <div class="col-12">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="dashboard.php" class="text-decoration-none">داشبورد</a></li>
-                <li class="breadcrumb-item"><a href="sessions.php?id=<?php echo $quiz['course_id']; ?>" class="text-decoration-none"><?php echo $quiz['course_name']; ?></a></li>
+                <li class="breadcrumb-item"><a href="<?php echo $_SESSION['role'] === 'admin' ? '../admin/dashboard.php' : 'dashboard.php'; ?>" class="text-decoration-none">داشبورد</a></li>
                 <li class="breadcrumb-item active">گزارش نمرات کوئیز</li>
             </ol>
         </nav>
@@ -72,7 +77,7 @@ include 'header.php';
                 <a href="?session_id=<?php echo $session_id; ?>&export=1" class="btn btn-success btn-modern shadow-sm">
                     <i class="bi bi-file-earmark-excel me-1"></i> خروجی اکسل
                 </a>
-                <a href="sessions.php?id=<?php echo $quiz['course_id']; ?>" class="btn btn-light btn-modern border shadow-sm">
+                <a href="<?php echo $_SESSION['role'] === 'admin' ? '../admin/reports.php?course_id='.$quiz['course_id'] : 'sessions.php?id='.$quiz['course_id']; ?>" class="btn btn-light btn-modern border shadow-sm">
                     <i class="bi bi-arrow-right me-1"></i> بازگشت
                 </a>
             </div>
