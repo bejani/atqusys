@@ -40,7 +40,7 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'student') {
     </style>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark navbar-modern sticky-top">
+    <nav class="navbar navbar-expand-lg navbar-modern sticky-top shadow-sm">
         <div class="container">
             <a class="navbar-brand navbar-brand-modern" href="dashboard.php">
                 <i class="bi bi-mortarboard-fill me-2"></i> سامانه هوشمند

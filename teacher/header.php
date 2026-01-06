@@ -36,7 +36,7 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'teacher') {
     </style>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark navbar-modern sticky-top">
+    <nav class="navbar navbar-expand-lg navbar-modern sticky-top shadow-sm">
         <div class="container">
             <a class="navbar-brand navbar-brand-modern" href="dashboard.php">
                 <i class="bi bi-mortarboard-fill me-2"></i> سامانه هوشمند
@@ -47,22 +47,22 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'teacher') {
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item">
-                        <a class="nav-link nav-link-modern <?php echo basename($_SERVER['PHP_SELF']) == 'dashboard.php' ? 'active' : ''; ?>' href="dashboard.php">
+                        <a class="nav-link nav-link-modern <?php echo basename($_SERVER['PHP_SELF']) == 'dashboard.php' ? 'active' : ''; ?>" href="dashboard.php">
                             <i class="bi bi-grid-fill me-1"></i> داشبورد
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link nav-link-modern <?php echo basename($_SERVER['PHP_SELF']) == 'sessions.php' ? 'active' : ''; ?>' href="sessions.php">
+                        <a class="nav-link nav-link-modern <?php echo (basename($_SERVER['PHP_SELF']) == 'sessions.php' || basename($_SERVER['PHP_SELF']) == 'attendance_report.php') ? 'active' : ''; ?>" href="dashboard.php">
                             <i class="bi bi-calendar-event me-1"></i> جلسات و حضور غیاب
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link nav-link-modern <?php echo basename($_SERVER['PHP_SELF']) == 'question_bank.php' ? 'active' : ''; ?>' href="question_bank.php">
+                        <a class="nav-link nav-link-modern <?php echo basename($_SERVER['PHP_SELF']) == 'question_bank.php' ? 'active' : ''; ?>" href="question_bank.php">
                             <i class="bi bi-journal-text me-1"></i> بانک سوالات
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link nav-link-modern <?php echo basename($_SERVER['PHP_SELF']) == 'manage_quiz.php' ? 'active' : ''; ?>' href="manage_quiz.php">
+                        <a class="nav-link nav-link-modern <?php echo (basename($_SERVER['PHP_SELF']) == 'manage_quiz.php' || basename($_SERVER['PHP_SELF']) == 'quiz_report.php') ? 'active' : ''; ?>" href="dashboard.php">
                             <i class="bi bi-patch-check me-1"></i> مدیریت کوئیز
                         </a>
                     </li>
