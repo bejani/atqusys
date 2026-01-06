@@ -53,6 +53,7 @@ $users = $pdo->query("SELECT * FROM users ORDER BY role, full_name")->fetchAll()
             <span class="navbar-brand">پنل مدیریت سیستم (ادمین)</span>
             <div>
                 <a href="reports.php" class="btn btn-info btn-sm">گزارشات جامع</a>
+                <a href="../change_password.php" class="btn btn-outline-warning btn-sm me-2">تغییر رمز</a>
                 <a href="../logout.php" class="btn btn-outline-light btn-sm">خروج</a>
             </div>
         </div>

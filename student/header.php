@@ -30,6 +30,9 @@
                         <a class="nav-link" href="my_reports.php"><i class="bi bi-file-earmark-text"></i> گزارشات من</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" href="../change_password.php"><i class="bi bi-key"></i> تغییر رمز</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link text-light" href="../logout.php"><i class="bi bi-box-arrow-right"></i> خروج</a>
                     </li>
                 </ul>

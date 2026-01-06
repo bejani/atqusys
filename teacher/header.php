@@ -31,6 +31,9 @@
                         <a class="nav-link" href="question_bank.php"><i class="bi bi-database"></i> بانک سوالات</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" href="../change_password.php"><i class="bi bi-key"></i> تغییر رمز</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link text-danger" href="../logout.php"><i class="bi bi-box-arrow-right"></i> خروج</a>
                     </li>
                 </ul>
