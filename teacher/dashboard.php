@@ -4,25 +4,27 @@ checkRole(['teacher']);
 
 $teacher_id = $_SESSION['user_id'];
 
-// دریافت لیست دروس این استاد
-$stmt = $pdo->prepare("SELECT * FROM courses WHERE teacher_id = ?");
-$stmt->execute([$teacher_id]);
-$courses = $stmt->fetchAll();
+require_once '../src/autoload.php';
+use App\Actions\CourseAction;
+
+$courseAction = new CourseAction();
+$teacher_id = $_SESSION['user_id'];
 
 // افزودن درس جدید
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_course'])) {
     $name = $_POST['course_name'];
     $code = $_POST['course_code'];
     
-    try {
-        $stmt = $pdo->prepare("INSERT INTO courses (course_name, course_code, teacher_id) VALUES (?, ?, ?)");
-        $stmt->execute([$name, $code, $teacher_id]);
+    if ($courseAction->addCourse($name, $code, $teacher_id)) {
         header("Location: dashboard.php?success=1");
         exit();
-    } catch (PDOException $e) {
-        $error = "خطا در ثبت درس: " . $e->getMessage();
+    } else {
+        $error = "خطا در ثبت درس. احتمالاً کد درس تکراری است.";
     }
 }
+
+// دریافت لیست دروس این استاد
+$courses = $courseAction->getTeacherCourses($teacher_id);
 
 include 'header.php'; 
 ?>

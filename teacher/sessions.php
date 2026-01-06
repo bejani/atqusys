@@ -2,12 +2,15 @@
 require_once '../includes/config.php';
 checkRole(['teacher']);
 
-$course_id = $_GET['id'] ?? 0;
+require_once '../src/autoload.php';
+use App\Actions\CourseAction;
+use App\Actions\SessionAction;
 
-// بررسی دسترسی استاد به درس
-$stmt = $pdo->prepare("SELECT * FROM courses WHERE id = ? AND teacher_id = ?");
-$stmt->execute([$course_id, $_SESSION['user_id']]);
-$course = $stmt->fetch();
+$courseAction = new CourseAction();
+$sessionAction = new SessionAction();
+
+$course_id = $_GET['id'] ?? 0;
+$course = $courseAction->getCourseById($course_id, $_SESSION['user_id']);
 
 if (!$course) {
     die("درس یافت نشد.");
@@ -15,19 +18,14 @@ if (!$course) {
 
 // ایجاد جلسه جدید
 if (isset($_POST['create_session'])) {
-    $date = date('Y-m-d');
-    $token = bin2hex(random_bytes(16)); // تولید توکن تصادفی برای QR
-    
-    $stmt = $pdo->prepare("INSERT INTO sessions (course_id, session_date, qr_code_token) VALUES (?, ?, ?)");
-    $stmt->execute([$course_id, $date, $token]);
-    header("Location: sessions.php?id=$course_id");
-    exit();
+    if ($sessionAction->createSession($course_id)) {
+        header("Location: sessions.php?id=$course_id");
+        exit();
+    }
 }
 
 // لیست جلسات
-$stmt = $pdo->prepare("SELECT * FROM sessions WHERE course_id = ? ORDER BY created_at DESC");
-$stmt->execute([$course_id]);
-$sessions = $stmt->fetchAll();
+$sessions = $sessionAction->getCourseSessions($course_id);
 
 include 'header.php'; 
 ?>
@@ -94,9 +92,7 @@ include 'header.php';
                         </td>
                         <td>
                             <?php 
-                                $q_stmt = $pdo->prepare("SELECT id FROM quizzes WHERE session_id = ?");
-                                $q_stmt->execute([$s['id']]);
-                                $quiz = $q_stmt->fetch();
+                                $quiz = $sessionAction->getQuizForSession($s['id']);
                                 if ($quiz):
                             ?>
                                 <div class="btn-group btn-group-sm">
