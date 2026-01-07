@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@100;400;700&display=swap');
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        .slide-container {
+            width: 1280px;
+            min-height: 720px;
+            background: #0F172A;
+            position: relative;
+            overflow: hidden;
+            font-family: 'Vazirmatn', sans-serif;
+            color: #CBD5E1;
+        }
+
+        .header {
+            padding-top: 40px;
+            padding-right: 60px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .page-title {
+            font-size: 32px;
+            color: #F8FAFC;
+            font-weight: 700;
+            border-right: 6px solid #2DD4BF;
+            padding-right: 20px;
+        }
+
+        .content-wrapper {
+            display: flex;
+            padding-top: 60px;
+            padding-right: 60px;
+            padding-left: 60px;
+            justify-content: space-between;
+            gap: 30px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .panel {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 40px;
+            padding-right: 40px;
+            padding-left: 40px;
+            min-height: 480px;
+        }
+
+        .panel-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .panel-header i {
+            margin-left: 15px;
+            font-size: 28px;
+        }
+
+        .achievement-header { color: #2DD4BF; }
+        .conclusion-header { color: #FB7185; }
+
+        .list-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 25px;
+        }
+
+        .list-bullet {
+            width: 10px;
+            height: 10px;
+            border-radius: 2px;
+            margin-top: 10px;
+            margin-left: 15px;
+            flex-shrink: 0;
+        }
+
+        .bullet-achievement { background: #2DD4BF; }
+        .bullet-conclusion { background: #FB7185; }
+
+        .list-text {
+            font-size: 18px;
+            line-height: 1.7;
+            text-align: justify;
+        }
+
+        .final-statement {
+            position: absolute;
+            bottom: 40px;
+            width: 100%;
+            text-align: center;
+            padding-top: 20px;
+            font-size: 22px;
+            font-weight: 700;
+            color: #F8FAFC;
+            opacity: 0.9;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="header">
+            <h2 class="page-title">بحث و نتیجه‌گیری: اثبات کارایی و دستاوردهای کلیدی پروژه</h2>
+        </div>
+
+        <div class="content-wrapper">
+            <!-- Achievements Panel -->
+            <div class="panel">
+                <div class="panel-header achievement-header">
+                    <i class="fas fa-trophy"></i>
+                    <span>دستاوردهای کلیدی</span>
+                </div>
+                <div class="list-item">
+                    <div class="list-bullet bullet-achievement"></div>
+                    <p class="list-text">طراحی و پیاده‌سازی موفقیت‌آمیز اولین شبیه‌ساز برونکوسکوپی بومی با رویکرد واقعیت مجازی و هزینه بسیار کمتر از نمونه‌های خارجی.</p>
+                </div>
+                <div class="list-item">
+                    <div class="list-bullet bullet-achievement"></div>
+                    <p class="list-text">ارائه راهکار نوآورانه «مقاومت پله‌ای» در سخت‌افزار برای غلبه بر چالش‌های موقعیت‌یابی پروب در مولاژهای دست‌ساز.</p>
+                </div>
+                <div class="list-item">
+                    <div class="list-bullet bullet-achievement"></div>
+                    <p class="list-text">یکپارچه‌سازی موفق ماژول‌های نرم‌افزاری و سخت‌افزاری از طریق میان‌افزار اختصاصی با قابلیت روان‌سازی حرکت.</p>
+                </div>
+            </div>
+
+            <!-- Conclusions Panel -->
+            <div class="panel" style="border-color: rgba(251, 113, 133, 0.2);">
+                <div class="panel-header conclusion-header">
+                    <i class="fas fa-check-double"></i>
+                    <span>نتیجه‌گیری نهایی</span>
+                </div>
+                <div class="list-item">
+                    <div class="list-bullet bullet-conclusion"></div>
+                    <p class="list-text">شبیه‌ساز طراحی شده محیطی ایمن و بدون ریسک برای تمرین مهارت‌های پایه فراهم کرده و اعتماد به نفس فراگیران را افزایش می‌دهد.</p>
+                </div>
+                <div class="list-item">
+                    <div class="list-bullet bullet-conclusion"></div>
+                    <p class="list-text">ارزیابی‌های بالینی نشان‌دهنده پتانسیل بالای سیستم برای ورود به کوریکولوم‌های آموزشی دانشگاه‌های علوم پزشکی است.</p>
+                </div>
+                <div class="list-item">
+                    <div class="list-bullet bullet-conclusion"></div>
+                    <p class="list-text">بومی‌سازی این تکنولوژی نه تنها باعث صرفه‌جویی ارزی می‌شود، بلکه امکان توسعه سناریوهای آموزشی اختصاصی را فراهم می‌آورد.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="final-statement">
+            <p>گامی نوین در جهت ارتقای ایمنی بیمار و کیفیت آموزش پزشکی در کشور</p>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@100;400;700&display=swap');
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        .slide-container {
+            width: 1280px;
+            min-height: 720px;
+            background: #0F172A;
+            position: relative;
+            overflow: hidden;
+            font-family: 'Vazirmatn', sans-serif;
+            color: #CBD5E1;
+        }
+
+        .header {
+            padding-top: 40px;
+            padding-right: 60px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .page-title {
+            font-size: 32px;
+            color: #F8FAFC;
+            font-weight: 700;
+            border-right: 6px solid #2DD4BF;
+            padding-right: 20px;
+        }
+
+        .pipeline-wrapper {
+            display: flex;
+            padding-top: 80px;
+            padding-right: 60px;
+            padding-left: 60px;
+            justify-content: space-between;
+            align-items: flex-start;
+            position: relative;
+            z-index: 10;
+        }
+
+        .stage-card {
+            width: 360px;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 40px;
+            padding-right: 30px;
+            padding-left: 30px;
+            min-height: 420px;
+            text-align: center;
+            position: relative;
+        }
+
+        .stage-number {
+            position: absolute;
+            top: -25px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: #2DD4BF;
+            color: #0F172A;
+            border-radius: 12px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: 700;
+            font-size: 24px;
+        }
+
+        .stage-icon {
+            font-size: 48px;
+            color: #2DD4BF;
+            margin-bottom: 25px;
+        }
+
+        .stage-title {
+            font-size: 24px;
+            color: #F8FAFC;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .stage-list {
+            list-style: none;
+            text-align: right;
+        }
+
+        .stage-list li {
+            font-size: 16px;
+            line-height: 1.8;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .stage-list li::before {
+            content: "\f0da";
+            font-family: "Font Awesome 5 Free";
+            font-weight: 900;
+            color: #FB7185;
+            margin-left: 10px;
+            font-size: 14px;
+        }
+
+        .connector {
+            flex: 1;
+            padding-top: 200px;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.1);
+            font-size: 24px;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="header">
+            <h2 class="page-title">توسعه نرم‌افزار VR: بازسازی آناتومیک از داده‌های بالینی</h2>
+        </div>
+
+        <div class="pipeline-wrapper">
+            <div class="stage-card">
+                <div class="stage-number">۱</div>
+                <i class="fas fa-file-medical stage-icon"></i>
+                <h3 class="stage-title">دریافت و تحلیل داده</h3>
+                <ul class="stage-list">
+                    <li>استخراج تصاویر DICOM از اسکن‌های CT-Scan واقعی.</li>
+                    <li>تحلیل آناتومیک مجاری هوایی تحت نظارت اساتید بالینی.</li>
+                    <li>تعیین فاکتورهای رنگ، بافت و صحت آناتومیکی.</li>
+                </ul>
+            </div>
+
+            <div class="connector"><i class="fas fa-chevron-left"></i></div>
+
+            <div class="stage-card">
+                <div class="stage-number">۲</div>
+                <i class="fas fa-cube stage-icon"></i>
+                <h3 class="stage-title">مدل‌سازی سه‌بعدی (Blender)</h3>
+                <ul class="stage-list">
+                    <li>تبدیل ابر نقاط به مش‌های هندسی (Mesh).</li>
+                    <li>اعمال الگوریتم‌های هموارسازی برای سطوح داخلی.</li>
+                    <li>بهینه‌سازی تعداد چندضلعی‌ها (Retopology).</li>
+                </ul>
+            </div>
+
+            <div class="connector"><i class="fas fa-chevron-left"></i></div>
+
+            <div class="stage-card">
+                <div class="stage-number">۳</div>
+                <i class="fas fa-vr-cardboard stage-icon"></i>
+                <h3 class="stage-title">پیاده‌سازی VR (Unity)</h3>
+                <ul class="stage-list">
+                    <li>ساخت محیط تعاملی و غوطه‌ور در موتور Unity.</li>
+                    <li>پیاده‌سازی فیزیک برخورد و حرکت برونکوسکوپ.</li>
+                    <li>بهینه‌سازی نرخ فریم برای جلوگیری از Motion Sickness.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

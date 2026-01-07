@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@100;400;700&display=swap');
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        .slide-container {
+            width: 1280px;
+            min-height: 720px;
+            background: #0F172A;
+            position: relative;
+            overflow: hidden;
+            font-family: 'Vazirmatn', sans-serif;
+            color: #CBD5E1;
+        }
+
+        .header {
+            padding-top: 40px;
+            padding-right: 60px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .page-title {
+            font-size: 32px;
+            color: #F8FAFC;
+            font-weight: 700;
+            border-right: 6px solid #2DD4BF;
+            padding-right: 20px;
+        }
+
+        .content-wrapper {
+            display: flex;
+            padding-top: 50px;
+            padding-right: 40px;
+            padding-left: 40px;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .achievement-card {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 30px;
+            padding-right: 25px;
+            padding-left: 25px;
+            min-height: 520px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            font-size: 20px;
+            color: #2DD4BF;
+            font-weight: 700;
+        }
+
+        .card-header i {
+            margin-left: 15px;
+            font-size: 24px;
+        }
+
+        .publication-box {
+            background: rgba(45, 212, 191, 0.05);
+            border-right: 4px solid #2DD4BF;
+            padding-top: 15px;
+            padding-right: 15px;
+            padding-left: 15px;
+            margin-bottom: 20px;
+        }
+
+        .journal-name {
+            font-size: 16px;
+            color: #F8FAFC;
+            font-weight: 700;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .article-title {
+            font-size: 14px;
+            line-height: 1.5;
+            font-style: italic;
+            color: #94A3B8;
+            direction: ltr;
+            text-align: left;
+        }
+
+        .impact-stat {
+            text-align: center;
+            padding-top: 20px;
+            margin-bottom: 20px;
+        }
+
+        .citation-count {
+            font-size: 48px;
+            font-weight: 700;
+            color: #FB7185;
+            display: block;
+        }
+
+        .citation-label {
+            font-size: 16px;
+            color: #CBD5E1;
+        }
+
+        .journal-logos {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 15px;
+            font-size: 14px;
+            color: #94A3B8;
+            font-weight: 700;
+        }
+
+        .status-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+
+        .status-icon {
+            width: 32px;
+            height: 32px;
+            background: rgba(251, 113, 133, 0.1);
+            color: #FB7185;
+            border-radius: 8px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-left: 15px;
+            flex-shrink: 0;
+        }
+
+        .status-content h4 {
+            font-size: 16px;
+            color: #F8FAFC;
+            margin-bottom: 3px;
+        }
+
+        .status-content p {
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        .badge {
+            display: inline-block;
+            background: #2DD4BF;
+            color: #0F172A;
+            padding-top: 4px;
+            padding-right: 10px;
+            padding-left: 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 700;
+            margin-top: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="header">
+            <h2 class="page-title">دستاوردها: اعتبار علمی بین‌المللی و تجاری‌سازی</h2>
+        </div>
+
+        <div class="content-wrapper">
+            <!-- Scientific Publication -->
+            <div class="achievement-card">
+                <div class="card-header">
+                    <i class="fas fa-file-alt"></i>
+                    <span>انتشارات علمی</span>
+                </div>
+                <div class="publication-box">
+                    <span class="journal-name">Health Science Reports (Q2)</span>
+                    <p class="article-title">
+                        "The effects of virtual reality-based bronchoscopy simulator on learning outcomes of medical trainees: A systematic review"
+                    </p>
+                    <span class="badge">چاپ شده - ۲۰۲۳</span>
+                </div>
+                <p style="font-size: 14px; line-height: 1.7; text-align: justify;">
+                    این مقاله مرور نظام‌مند به عنوان مبنای تئوریک پروژه، تاییدیه علمی لازم برای توسعه شبیه‌ساز را در سطح بین‌المللی فراهم آورده است.
+                </p>
+            </div>
+
+            <!-- International Impact -->
+            <div class="achievement-card" style="border-color: rgba(251, 113, 133, 0.3); background: rgba(251, 113, 133, 0.05);">
+                <div class="card-header" style="color: #FB7185;">
+                    <i class="fas fa-chart-line"></i>
+                    <span>تاثیرگذاری بین‌المللی</span>
+                </div>
+                <div class="impact-stat">
+                    <span class="citation-count">+۱۰</span>
+                    <span class="citation-label">استناد علمی معتبر (Citations)</span>
+                </div>
+                <p style="font-size: 14px; line-height: 1.7; text-align: center; margin-bottom: 15px;">
+                    ارجاع توسط پژوهشگران بین‌المللی در سال‌های ۲۰۲۴ و ۲۰۲۵ در ژورنال‌های معتبر:
+                </p>
+                <div class="journal-logos">
+                    <span><i class="fas fa-check-circle"></i> JTD (PMC)</span>
+                    <span><i class="fas fa-check-circle"></i> Frontiers</span>
+                </div>
+                <div class="journal-logos">
+                    <span><i class="fas fa-check-circle"></i> JMIR</span>
+                    <span><i class="fas fa-check-circle"></i> MDPI</span>
+                </div>
+                <p style="font-size: 13px; color: #94A3B8; margin-top: 20px; text-align: center; font-style: italic;">
+                    * تایید متدولوژی و نتایج توسط جامعه علمی جهانی
+                </p>
+            </div>
+
+            <!-- Commercialization & Tech -->
+            <div class="achievement-card">
+                <div class="card-header">
+                    <i class="fas fa-rocket"></i>
+                    <span>فناوری و تجاری‌سازی</span>
+                </div>
+                <div class="status-item">
+                    <div class="status-icon"><i class="fas fa-lightbulb"></i></div>
+                    <div class="status-content">
+                        <h4>ثبت طرح فناورانه</h4>
+                        <p>ثبت رسمی در دفتر توسعه فناوری سلامت دانشگاه علوم پزشکی تبریز.</p>
+                    </div>
+                </div>
+                <div class="status-item">
+                    <div class="status-icon"><i class="fas fa-building"></i></div>
+                    <div class="status-content">
+                        <h4>استقرار در مرکز رشد</h4>
+                        <p>پذیرش در مرکز رشد فناوری‌های مدیریتی جهت تولید نسخه تجاری.</p>
+                    </div>
+                </div>
+                <div class="status-item">
+                    <div class="status-icon"><i class="fas fa-certificate"></i></div>
+                    <div class="status-content">
+                        <h4>کد اخلاق پژوهش</h4>
+                        <p>دریافت تاییدیه اخلاق برای ارزیابی‌های بالینی بیمارستانی.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

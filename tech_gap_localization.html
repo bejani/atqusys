@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@100;400;700&display=swap');
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        .slide-container {
+            width: 1280px;
+            min-height: 720px;
+            background: #0F172A;
+            position: relative;
+            overflow: hidden;
+            font-family: 'Vazirmatn', sans-serif;
+            color: #CBD5E1;
+        }
+
+        .header {
+            padding-top: 40px;
+            padding-right: 60px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .page-title {
+            font-size: 32px;
+            color: #F8FAFC;
+            font-weight: 700;
+            border-right: 6px solid #2DD4BF;
+            padding-right: 20px;
+        }
+
+        .content-wrapper {
+            padding-top: 40px;
+            padding-right: 60px;
+            padding-left: 60px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .comparison-table {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 40px;
+            border-collapse: collapse;
+        }
+
+        .comparison-table th, .comparison-table td {
+            padding-top: 20px;
+            padding-right: 20px;
+            padding-left: 20px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .comparison-table th {
+            background: rgba(45, 212, 191, 0.1);
+            color: #2DD4BF;
+            font-size: 20px;
+        }
+
+        .comparison-table td {
+            font-size: 18px;
+            min-height: 60px;
+        }
+
+        .localization-box {
+            display: flex;
+            gap: 30px;
+        }
+
+        .info-card {
+            flex: 1;
+            background: rgba(251, 113, 133, 0.05);
+            border: 1px solid rgba(251, 113, 133, 0.2);
+            padding-top: 30px;
+            padding-right: 30px;
+            padding-left: 30px;
+            min-height: 220px;
+        }
+
+        .card-title {
+            font-size: 22px;
+            color: #FB7185;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .card-title i {
+            margin-left: 10px;
+        }
+
+        .card-text {
+            font-size: 16px;
+            line-height: 1.6;
+            text-align: justify;
+        }
+
+        .check-icon { color: #2DD4BF; margin-left: 8px; }
+        .cross-icon { color: #FB7185; margin-left: 8px; }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="header">
+            <h2 class="page-title">شکاف تکنولوژیک و استراتژی بومی‌سازی شبیه‌سازها</h2>
+        </div>
+
+        <div class="content-wrapper">
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>ویژگی / سیستم</th>
+                        <th>BronchMentor (سوئد)</th>
+                        <th>AccuTouch (آمریکا)</th>
+                        <th>راهکار بومی (پیشنهادی)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>دقت شبیه‌سازی</td>
+                        <td>بسیار بالا (State-of-the-art)</td>
+                        <td>بسیار بالا</td>
+                        <td>بالا و قابل ارتقا</td>
+                    </tr>
+                    <tr>
+                        <td>هزینه تهیه و نگهداری</td>
+                        <td><i class="fas fa-times cross-icon"></i> بسیار گران‌قیمت</td>
+                        <td><i class="fas fa-times cross-icon"></i> بسیار گران‌قیمت</td>
+                        <td><i class="fas fa-check check-icon"></i> مقرون‌به‌صرفه</td>
+                    </tr>
+                    <tr>
+                        <td>انعطاف‌پذیری سناریو</td>
+                        <td>محدود به پکیج‌های تجاری</td>
+                        <td>محدود</td>
+                        <td><i class="fas fa-check check-icon"></i> کاملاً شخصی‌سازی شده</td>
+                    </tr>
+                    <tr>
+                        <td>دسترسی به کد منبع</td>
+                        <td><i class="fas fa-times cross-icon"></i> غیرممکن</td>
+                        <td><i class="fas fa-times cross-icon"></i> غیرممکن</td>
+                        <td><i class="fas fa-check check-icon"></i> در دسترس (بومی)</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="localization-box">
+                <div class="info-card">
+                    <h3 class="card-title"><i class="fas fa-globe-americas"></i> محدودیت‌های شبیه‌سازهای خارجی</h3>
+                    <p class="card-text">
+                        هزینه‌های گزاف خرید و تحریم‌های اقتصادی مانع از دسترسی گسترده مراکز آموزشی کشور به این تکنولوژی‌ها شده است. همچنین عدم امکان تغییر در سناریوها، مانع از انطباق آن‌ها با نیازهای خاص آموزشی ما می‌گردد.
+                    </p>
+                </div>
+                <div class="info-card" style="background: rgba(45, 212, 191, 0.05); border-color: rgba(45, 212, 191, 0.2);">
+                    <h3 class="card-title" style="color: #2DD4BF;"><i class="fas fa-flag"></i> ضرورت بومی‌سازی</h3>
+                    <p class="card-text">
+                        تولید داخلی نه تنها باعث صرفه‌جویی ارزی می‌شود، بلکه امکان توسعه مداوم، پشتیبانی فنی در دسترس و طراحی سناریوهای آموزشی مبتنی بر کیس‌های بالینی بومی را فراهم می‌آورد. این پروژه گامی در جهت خودکفایی در تجهیزات پیشرفته آموزش پزشکی است.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

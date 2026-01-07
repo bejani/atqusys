@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@100;400;700&display=swap');
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        .slide-container {
+            width: 1280px;
+            min-height: 720px;
+            background: #0F172A;
+            position: relative;
+            overflow: hidden;
+            font-family: 'Vazirmatn', sans-serif;
+            color: #CBD5E1;
+        }
+
+        .header {
+            padding-top: 40px;
+            padding-right: 60px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .page-title {
+            font-size: 32px;
+            color: #F8FAFC;
+            font-weight: 700;
+            border-right: 6px solid #2DD4BF;
+            padding-right: 20px;
+        }
+
+        .content-wrapper {
+            padding-top: 40px;
+            padding-right: 60px;
+            padding-left: 60px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .main-goal-box {
+            background: rgba(45, 212, 191, 0.05);
+            border: 2px solid #2DD4BF;
+            padding-top: 25px;
+            padding-right: 30px;
+            padding-left: 30px;
+            min-height: 120px;
+            margin-bottom: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .main-goal-text {
+            font-size: 26px;
+            color: #F8FAFC;
+            font-weight: 700;
+            line-height: 1.4;
+        }
+
+        .columns-container {
+            display: flex;
+            gap: 40px;
+        }
+
+        .column {
+            flex: 1;
+        }
+
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 30px;
+            padding-right: 30px;
+            padding-left: 30px;
+            min-height: 380px;
+        }
+
+        .panel-title {
+            font-size: 22px;
+            color: #2DD4BF;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            font-weight: 700;
+        }
+
+        .panel-title i {
+            margin-left: 12px;
+        }
+
+        .list-item {
+            display: flex;
+            margin-bottom: 18px;
+            align-items: flex-start;
+        }
+
+        .item-number {
+            width: 28px;
+            height: 28px;
+            background: #2DD4BF;
+            color: #0F172A;
+            border-radius: 6px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: 700;
+            font-size: 16px;
+            margin-left: 15px;
+            flex-shrink: 0;
+        }
+
+        .item-bullet {
+            color: #FB7185;
+            margin-left: 15px;
+            font-size: 18px;
+            flex-shrink: 0;
+            padding-top: 4px;
+        }
+
+        .item-text {
+            font-size: 17px;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="header">
+            <h2 class="page-title">اهداف راهبردی و فرضیات پژوهش</h2>
+        </div>
+
+        <div class="content-wrapper">
+            <div class="main-goal-box">
+                <p class="main-goal-text">
+                    <i class="fas fa-bullseye" style="color: #2DD4BF; margin-left: 15px;"></i>
+                    هدف کلی: طراحی و ارزیابی شبیه‌ساز برونکوسکوپی مبتنی بر واقعیت مجازی برای ارتقای سطح آموزش پزشکی
+                </p>
+            </div>
+
+            <div class="columns-container">
+                <div class="column">
+                    <div class="glass-panel">
+                        <h3 class="panel-title"><i class="fas fa-list-check"></i> اهداف اختصاصی</h3>
+                        <div class="list-item">
+                            <div class="item-number">۱</div>
+                            <p class="item-text">تعیین محتوای بالینی و آناتومیک دقیق مورد نیاز برای شبیه‌سازی فرآیند برونکوسکوپی.</p>
+                        </div>
+                        <div class="list-item">
+                            <div class="item-number">۲</div>
+                            <p class="item-text">مدل‌سازی سه‌بعدی محتوای بالینی استخراج شده جهت استفاده در محیط مجازی.</p>
+                        </div>
+                        <div class="list-item">
+                            <div class="item-number">۳</div>
+                            <p class="item-text">طراحی و پیاده‌سازی پروتوتایپ شبیه‌ساز واقعیت مجازی (نرم‌افزار، سخت‌افزار و میان‌افزار).</p>
+                        </div>
+                        <div class="list-item">
+                            <div class="item-number">۴</div>
+                            <p class="item-text">ارزیابی کارایی، واقع‌گرایی و ارزش آموزشی شبیه‌ساز توسط تیم متخصصین بالینی.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="column">
+                    <div class="glass-panel" style="border-color: rgba(251, 113, 133, 0.2);">
+                        <h3 class="panel-title" style="color: #FB7185;"><i class="fas fa-lightbulb"></i> فرضیات تحقیق</h3>
+                        <div class="list-item">
+                            <i class="fas fa-check-circle item-bullet"></i>
+                            <p class="item-text">شبیه‌ساز واقعیت مجازی محیطی ایمن و بدون ریسک برای تمرین مهارت‌های پایه فراهم می‌کند.</p>
+                        </div>
+                        <div class="list-item">
+                            <i class="fas fa-check-circle item-bullet"></i>
+                            <p class="item-text">استفاده از این سامانه منجر به بهبود مهارت‌های فنی و افزایش اعتماد به نفس فراگیران می‌شود.</p>
+                        </div>
+                        <div class="list-item">
+                            <i class="fas fa-check-circle item-bullet"></i>
+                            <p class="item-text">راهکار بومی طراحی شده از نظر هزینه و انعطاف‌پذیری بر نمونه‌های تجاری خارجی برتری دارد.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@100;400;700&display=swap');
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        .slide-container {
+            width: 1280px;
+            min-height: 720px;
+            background: #0F172A;
+            position: relative;
+            overflow: hidden;
+            font-family: 'Vazirmatn', sans-serif;
+            color: #CBD5E1;
+        }
+
+        .header {
+            padding-top: 40px;
+            padding-right: 60px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .page-title {
+            font-size: 32px;
+            color: #F8FAFC;
+            font-weight: 700;
+            border-right: 6px solid #2DD4BF;
+            padding-right: 20px;
+        }
+
+        .content-wrapper {
+            display: flex;
+            padding-top: 50px;
+            padding-right: 60px;
+            padding-left: 60px;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .chart-section {
+            width: 620px;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 30px;
+            padding-right: 30px;
+            padding-left: 30px;
+            min-height: 480px;
+        }
+
+        .chart-title {
+            font-size: 20px;
+            color: #2DD4BF;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: 700;
+        }
+
+        .info-section {
+            width: 500px;
+        }
+
+        .team-card {
+            background: rgba(45, 212, 191, 0.05);
+            border: 1px solid rgba(45, 212, 191, 0.2);
+            padding-top: 25px;
+            padding-right: 25px;
+            padding-left: 25px;
+            margin-bottom: 25px;
+            min-height: 180px;
+        }
+
+        .card-header {
+            font-size: 20px;
+            color: #F8FAFC;
+            font-weight: 700;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .card-header i {
+            margin-left: 12px;
+            color: #2DD4BF;
+        }
+
+        .team-list {
+            list-style: none;
+            font-size: 16px;
+            line-height: 1.8;
+        }
+
+        .team-list li {
+            display: flex;
+            align-items: center;
+        }
+
+        .team-list li::before {
+            content: "\f00c";
+            font-family: "Font Awesome 5 Free";
+            font-weight: 900;
+            color: #2DD4BF;
+            margin-left: 10px;
+            font-size: 12px;
+        }
+
+        .summary-card {
+            background: rgba(251, 113, 133, 0.05);
+            border: 1px solid rgba(251, 113, 133, 0.2);
+            padding-top: 25px;
+            padding-right: 25px;
+            padding-left: 25px;
+            min-height: 220px;
+        }
+
+        .summary-text {
+            font-size: 16px;
+            line-height: 1.7;
+            text-align: justify;
+        }
+
+        .location-tag {
+            position: absolute;
+            bottom: 40px;
+            right: 60px;
+            font-size: 14px;
+            color: #64748B;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="header">
+            <h2 class="page-title">ارزیابی بالینی: تحلیل بازخورد متخصصین بیمارستان امام رضا (ع)</h2>
+        </div>
+
+        <div class="content-wrapper">
+            <div class="chart-section">
+                <h3 class="chart-title">میانگین نمرات ارزیابی (از ۵ امتیاز)</h3>
+                <div style="height: 380px;">
+                    <canvas id="evalChart"></canvas>
+                </div>
+            </div>
+
+            <div class="info-section">
+                <div class="team-card">
+                    <h3 class="card-header"><i class="fas fa-user-md"></i> ترکیب تیم ارزیابی‌کننده</h3>
+                    <ul class="team-list">
+                        <li>یک استاد فوق تخصص بیماری‌های ریه</li>
+                        <li>دو فلوشیپ ریه</li>
+                        <li>دو دانشجوی رزیدنت داخلی</li>
+                    </ul>
+                </div>
+
+                <div class="summary-card">
+                    <h3 class="card-header" style="color: #FB7185;"><i class="fas fa-poll"></i> تحلیل نتایج کلیدی</h3>
+                    <p class="summary-text">
+                        بالاترین امتیاز مربوط به <span style="color: #2DD4BF; font-weight: 700;">«مطابقت با نیازهای آموزشی» (۲.۴)</span> بود که نشان‌دهنده درک صحیح پروژه از شکاف‌های آموزشی موجود است. همچنین معیارهای <span style="color: #F8FAFC;">واقع‌گرایی تصویری</span> و <span style="color: #F8FAFC;">اثرگذاری آموزشی</span> نمره ۲ را کسب کردند که برای یک پروتوتایپ بومی، شروعی امیدوارکننده محسوب می‌شود.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="location-tag">
+            * محل ارزیابی: بخش ریه بیمارستان امام رضا (ع) تبریز - مرداد ۱۴۰۳
+        </div>
+    </div>
+
+    <script>
+        const ctx = document.getElementById('evalChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['واقع‌گرایی تصویری', 'ارگونومی طراحی', 'دقت شبیه‌سازی', 'فیدبک لمسی', 'اثرگذاری آموزشی', 'نیاز آموزشی', 'سهولت استفاده'],
+                datasets: [{
+                    label: 'میانگین نمره',
+                    data: [2.0, 2.2, 1.6, 2.0, 2.0, 2.4, 2.0],
+                    backgroundColor: 'rgba(45, 212, 191, 0.4)',
+                    borderColor: '#2DD4BF',
+                    borderWidth: 2,
+                    borderRadius: 5
+                }]
+            },
+            options: {
+                indexAxis: 'y',
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    x: {
+                        beginAtZero: true,
+                        max: 5,
+                        grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                        ticks: { color: '#94A3B8', font: { family: 'Vazirmatn' } }
+                    },
+                    y: {
+                        grid: { display: false },
+                        ticks: { color: '#F8FAFC', font: { family: 'Vazirmatn', size: 14 } }
+                    }
+                },
+                plugins: {
+                    legend: { display: false }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

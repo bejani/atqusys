@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@100;400;700&display=swap');
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        .slide-container {
+            width: 1280px;
+            min-height: 720px;
+            background: #0F172A;
+            position: relative;
+            overflow: hidden;
+            font-family: 'Vazirmatn', sans-serif;
+            color: #CBD5E1;
+        }
+
+        .header {
+            padding-top: 40px;
+            padding-right: 60px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .page-title {
+            font-size: 32px;
+            color: #F8FAFC;
+            font-weight: 700;
+            border-right: 6px solid #2DD4BF;
+            padding-right: 20px;
+        }
+
+        .content-wrapper {
+            display: flex;
+            padding-top: 80px;
+            padding-right: 60px;
+            padding-left: 60px;
+            justify-content: space-between;
+            align-items: stretch;
+            position: relative;
+            z-index: 10;
+        }
+
+        .module-card {
+            width: 360px;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 40px;
+            padding-right: 30px;
+            padding-left: 30px;
+            min-height: 420px;
+            text-align: center;
+        }
+
+        .module-icon {
+            font-size: 50px;
+            color: #2DD4BF;
+            margin-bottom: 25px;
+        }
+
+        .module-title {
+            font-size: 24px;
+            color: #F8FAFC;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .module-list {
+            list-style: none;
+            text-align: right;
+        }
+
+        .module-list li {
+            font-size: 16px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .module-list li i {
+            color: #2DD4BF;
+            margin-left: 12px;
+            font-size: 14px;
+        }
+
+        .connector {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgba(45, 212, 191, 0.3);
+            font-size: 30px;
+            width: 40px;
+        }
+
+        .methodology-footer {
+            position: absolute;
+            bottom: 60px;
+            width: 100%;
+            text-align: center;
+            padding-top: 20px;
+        }
+
+        .footer-tag {
+            display: inline-block;
+            background: rgba(45, 212, 191, 0.1);
+            color: #2DD4BF;
+            padding-top: 10px;
+            padding-right: 25px;
+            padding-left: 25px;
+            border: 1px solid rgba(45, 212, 191, 0.3);
+            font-size: 18px;
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="header">
+            <h2 class="page-title">متدولوژی یکپارچه: همگرایی نرم‌افزار، سخت‌افزار و میان‌افزار</h2>
+        </div>
+
+        <div class="content-wrapper">
+            <!-- Hardware Module -->
+            <div class="module-card">
+                <i class="fas fa-microchip module-icon"></i>
+                <h3 class="module-title">ماژول سخت‌افزاری</h3>
+                <ul class="module-list">
+                    <li><i class="fas fa-caret-left"></i> طراحی و ساخت مولاژ راه هوایی</li>
+                    <li><i class="fas fa-caret-left"></i> پیاده‌سازی مدار الکترونیکی (Arduino)</li>
+                    <li><i class="fas fa-caret-left"></i> ساخت پروب اختصاصی برونکوسکوپی</li>
+                    <li><i class="fas fa-caret-left"></i> سیستم تشخیص موقعیت پله‌ای</li>
+                </ul>
+            </div>
+
+            <div class="connector">
+                <i class="fas fa-exchange-alt"></i>
+            </div>
+
+            <!-- Middleware Module -->
+            <div class="module-card" style="border-color: rgba(251, 113, 133, 0.3);">
+                <i class="fas fa-link module-icon" style="color: #FB7185;"></i>
+                <h3 class="module-title">ماژول میان‌افزاری</h3>
+                <ul class="module-list">
+                    <li><i class="fas fa-caret-left" style="color: #FB7185;"></i> مدیریت ارتباط سریال (USB)</li>
+                    <li><i class="fas fa-caret-left" style="color: #FB7185;"></i> پردازش داده‌های ورودی در Unity</li>
+                    <li><i class="fas fa-caret-left" style="color: #FB7185;"></i> الگوریتم روان‌سازی حرکت (Threading)</li>
+                    <li><i class="fas fa-caret-left" style="color: #FB7185;"></i> نگاشت دنیای فیزیکی به مجازی</li>
+                </ul>
+            </div>
+
+            <div class="connector">
+                <i class="fas fa-exchange-alt"></i>
+            </div>
+
+            <!-- Software Module -->
+            <div class="module-card">
+                <i class="fas fa-vr-cardboard module-icon"></i>
+                <h3 class="module-title">ماژول نرم‌افزاری</h3>
+                <ul class="module-list">
+                    <li><i class="fas fa-caret-left"></i> مدل‌سازی سه‌بعدی آناتومیک (Blender)</li>
+                    <li><i class="fas fa-caret-left"></i> توسعه محیط واقعیت مجازی (Unity)</li>
+                    <li><i class="fas fa-caret-left"></i> پیاده‌سازی فیزیک و تشخیص برخورد</li>
+                    <li><i class="fas fa-caret-left"></i> طراحی سناریوهای آموزشی تعاملی</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="methodology-footer">
+            <div class="footer-tag">رویکرد توسعه ماژولار و تکرارپذیر (Iterative Development)</div>
+        </div>
+    </div>
+</body>
+</html>

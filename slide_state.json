@@ -1,0 +1,108 @@
+{
+  "project_info": {
+    "title": "طراحی و ارزیابی شبیه‌ساز برونکوسکوپی مبتنی بر واقعیت مجازی",
+    "created": 1767815560.634114,
+    "last_updated": 1767816519.251266,
+    "total_slides": 12
+  },
+  "slides": {
+    "title_slide": "edited",
+    "clinical_challenge": "edited",
+    "tech_gap_localization": "edited",
+    "objectives_hypotheses": "edited",
+    "integrated_methodology": "edited",
+    "software_vr_development": "edited",
+    "hardware_innovation": "edited",
+    "electronics_middleware": "edited",
+    "clinical_evaluation": "edited",
+    "discussion_conclusion": "edited",
+    "achievements_honors": "edited",
+    "future_vision_qa": "edited"
+  },
+  "outline": [
+    {
+      "id": "title_slide",
+      "title": "طراحی و ارزیابی شبیه‌ساز برونکوسکوپی مبتنی بر واقعیت مجازی",
+      "summary": "اسلاید عنوان شامل نام دانشجو، اساتید راهنما و مشاور و اطلاعات دانشگاه.",
+      "image_plan": "",
+      "slide_template_key": ""
+    },
+    {
+      "id": "clinical_challenge",
+      "title": "چالش‌های آموزش بالینی و ضرورت ایمنی بیمار",
+      "summary": "تبیین اهمیت برونکوسکوپی و خطرات آموزش مستقیم روی بیمار واقعی.",
+      "image_plan": "",
+      "slide_template_key": ""
+    },
+    {
+      "id": "tech_gap_localization",
+      "title": "شکاف تکنولوژیک و استراتژی بومی‌سازی شبیه‌سازها",
+      "summary": "تحلیل شبیه‌سازهای خارجی و چرایی نیاز به تولید داخلی و مقرون‌به‌صرفه.",
+      "image_plan": "",
+      "slide_template_key": ""
+    },
+    {
+      "id": "objectives_hypotheses",
+      "title": "اهداف راهبردی و فرضیات پژوهش",
+      "summary": "بیان هدف کلی، اهداف اختصاصی چهارگانه و فرضیات تحقیق.",
+      "image_plan": "",
+      "slide_template_key": ""
+    },
+    {
+      "id": "integrated_methodology",
+      "title": "متدولوژی یکپارچه: همگرایی نرم‌افزار، سخت‌افزار و میان‌افزار",
+      "summary": "نمایش ساختار ماژولار پروژه و چرخه حیات توسعه سیستم.",
+      "image_plan": "",
+      "slide_template_key": ""
+    },
+    {
+      "id": "software_vr_development",
+      "title": "توسعه نرم‌افزار VR: بازسازی آناتومیک از داده‌های بالینی",
+      "summary": "فرآیند تبدیل داده‌های CT-Scan به مدل‌های سه‌بعدی در Blender و Unity.",
+      "image_plan": "",
+      "slide_template_key": ""
+    },
+    {
+      "id": "hardware_innovation",
+      "title": "نوآوری در سخت‌افزار: مهندسی مولاژ و تشخیص موقعیت پله‌ای",
+      "summary": "تشریح چالش‌های ساخت مولاژ فیزیکی و راهکار نهایی برای شبیه‌سازی مقاومت.",
+      "image_plan": "",
+      "slide_template_key": ""
+    },
+    {
+      "id": "electronics_middleware",
+      "title": "الکترونیک و میان‌افزار: مدیریت تعامل و روان‌سازی حرکت",
+      "summary": "نقش آردوینو و اسکریپت‌های C# در اتصال دنیای فیزیکی به مجازی.",
+      "image_plan": "",
+      "slide_template_key": ""
+    },
+    {
+      "id": "clinical_evaluation",
+      "title": "ارزیابی بالینی: تحلیل بازخورد متخصصین بیمارستان امام رضا (ع)",
+      "summary": "ارائه نتایج آماری و کیفی ارزیابی‌های انجام شده توسط تیم پزشکی.",
+      "image_plan": "",
+      "slide_template_key": ""
+    },
+    {
+      "id": "discussion_conclusion",
+      "title": "بحث و نتیجه‌گیری: اثبات کارایی و دستاوردهای کلیدی پروژه",
+      "summary": "جمع‌بندی نهایی در مورد موفقیت سیستم در ارتقای کیفیت آموزش.",
+      "image_plan": "",
+      "slide_template_key": ""
+    },
+    {
+      "id": "achievements_honors",
+      "title": "دستاوردها: مقالات علمی و استقرار در مرکز رشد فناوری",
+      "summary": "نمایش مقاله چاپ شده در Health Science Reports و وضعیت تجاری‌سازی.",
+      "image_plan": "",
+      "slide_template_key": ""
+    },
+    {
+      "id": "future_vision_qa",
+      "title": "چشم‌انداز آتی و جلسه پرسش و پاسخ",
+      "summary": "پیشنهادات برای توسعه نسخه‌های بعدی و تشکر نهایی.",
+      "image_plan": "",
+      "slide_template_key": ""
+    }
+  ]
+}
